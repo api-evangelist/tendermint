@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: Tendermint RPC ABCI Unsafe API
+  contact:
+    name: Tendermint RPC
+    url: https://github.com/tendermint/tendermint/issues/new/choose
+  description: "Tendermint supports the following RPC protocols:\n\n* URI over HTTP\n* JSONRPC over HTTP\n* JSONRPC over websockets\n\n## Configuration\n\nRPC can be configured by tuning parameters under `[rpc]` table in the\n`$TMHOME/config/config.toml` file or by using the `--rpc.X` command-line\nflags.\n\nDefault rpc listen address is `tcp://0.0.0.0:26657`.\nTo set another address, set the `laddr` config parameter to desired value.\nCORS (Cross-Origin Resource Sharing) can be enabled by setting\n`cors_allowed_origins`, `cors_allowed_methods`, `cors_allowed_headers`\nconfig parameters.\n\n## Arguments\n\nArguments which expect strings or byte arrays may be passed as quoted\nstrings, like `\"abc\"` or as `0x`-prefixed strings, like `0x616263`.\n\n## URI/HTTP\n\nA REST like interface.\n\n    curl localhost:26657/block?height=5\n\n## JSONRPC/HTTP\n\nJSONRPC requests can be POST'd to the root RPC endpoint via HTTP.\n\n    curl --header \"Content-Type: application/json\" --request POST --data '{\"method\": \"block\", \"params\": [\"5\"], \"id\": 1}' localhost:26657\n\n## JSONRPC/websockets\n\nJSONRPC requests can be also made via websocket.\nThe websocket endpoint is at `/websocket`, e.g. `localhost:26657/websocket`.\nAsynchronous RPC functions like event `subscribe` and `unsubscribe` are\nonly available via websockets.\n\nExample using https://github.com/hashrocket/ws:\n\n    ws ws://localhost:26657/websocket\n    > { \"jsonrpc\": \"2.0\", \"method\": \"subscribe\", \"params\": [\"tm.event='NewBlock'\"], \"id\": 1 }\n"
+  version: v0.34
+  license:
+    name: Apache 2.0
+    url: https://github.com/tendermint/tendermint/blob/main/LICENSE
+servers:
+- url: https://rpc.cosmos.network
+  description: Cosmos mainnet node to interact with the Tendermint RPC
+- url: http://localhost:26657
+  description: Interact with the Tendermint RPC locally on your device
+tags:
+- name: Unsafe
+  description: Unsafe APIs
+paths:
+  /dial_seeds:
+    get:
+      summary: Dial Seeds (Unsafe)
+      operationId: dial_seeds
+      tags:
+      - Unsafe
+      description: "Dial a peer, this route in under unsafe, and has to manually enabled to use\n\n  **Example:** curl 'localhost:26657/dial_seeds?seeds=\\[\"f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656\",\"0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656\"\\]'\n"
+      parameters:
+      - in: query
+        name: peers
+        description: list of seed nodes to dial
+        schema:
+          type: array
+          items:
+            type: string
+            example:
+            - f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656
+      responses:
+        '200':
+          description: Dialing seeds in progress. See /net_info for details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dialResp'
+        '500':
+          description: empty error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /dial_peers:
+    get:
+      summary: Add Peers/Persistent Peers (unsafe)
+      operationId: dial_peers
+      tags:
+      - Unsafe
+      description: 'Set a persistent peer, this route in under unsafe, and has to manually enabled to use.
+
+
+        **Example:** curl ''localhost:26657/dial_peers?peers=\["f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656","0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656"\]&persistent=false''
+
+        '
+      parameters:
+      - in: query
+        name: persistent
+        description: Have the peers you are dialing be persistent
+        schema:
+          type: boolean
+          example: true
+      - in: query
+        name: unconditional
+        description: Have the peers you are dialing be unconditional
+        schema:
+          type: boolean
+          example: true
+      - in: query
+        name: private
+        description: Have the peers you are dialing be private
+        schema:
+          type: boolean
+          example: true
+      - in: query
+        name: peers
+        description: array of peers to dial
+        schema:
+          type: array
+          items:
+            type: string
+            example:
+            - f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656
+      responses:
+        '200':
+          description: Dialing seeds in progress. See /net_info for details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dialResp'
+        '500':
+          description: empty error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    JSONRPC:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 0
+        jsonrpc:
+          type: string
+          example: '2.0'
+    ErrorResponse:
+      description: Error Response
+      allOf:
+      - $ref: '#/components/schemas/JSONRPC'
+      - type: object
+        properties:
+          error:
+            type: string
+            example: Description of failure
+    dialResp:
+      type: object
+      properties:
+        Log:
+          type: string
+          example: Dialing seeds in progress. See /net_info for details

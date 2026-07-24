@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  title: Tendermint RPC ABCI Websocket API
+  contact:
+    name: Tendermint RPC
+    url: https://github.com/tendermint/tendermint/issues/new/choose
+  description: "Tendermint supports the following RPC protocols:\n\n* URI over HTTP\n* JSONRPC over HTTP\n* JSONRPC over websockets\n\n## Configuration\n\nRPC can be configured by tuning parameters under `[rpc]` table in the\n`$TMHOME/config/config.toml` file or by using the `--rpc.X` command-line\nflags.\n\nDefault rpc listen address is `tcp://0.0.0.0:26657`.\nTo set another address, set the `laddr` config parameter to desired value.\nCORS (Cross-Origin Resource Sharing) can be enabled by setting\n`cors_allowed_origins`, `cors_allowed_methods`, `cors_allowed_headers`\nconfig parameters.\n\n## Arguments\n\nArguments which expect strings or byte arrays may be passed as quoted\nstrings, like `\"abc\"` or as `0x`-prefixed strings, like `0x616263`.\n\n## URI/HTTP\n\nA REST like interface.\n\n    curl localhost:26657/block?height=5\n\n## JSONRPC/HTTP\n\nJSONRPC requests can be POST'd to the root RPC endpoint via HTTP.\n\n    curl --header \"Content-Type: application/json\" --request POST --data '{\"method\": \"block\", \"params\": [\"5\"], \"id\": 1}' localhost:26657\n\n## JSONRPC/websockets\n\nJSONRPC requests can be also made via websocket.\nThe websocket endpoint is at `/websocket`, e.g. `localhost:26657/websocket`.\nAsynchronous RPC functions like event `subscribe` and `unsubscribe` are\nonly available via websockets.\n\nExample using https://github.com/hashrocket/ws:\n\n    ws ws://localhost:26657/websocket\n    > { \"jsonrpc\": \"2.0\", \"method\": \"subscribe\", \"params\": [\"tm.event='NewBlock'\"], \"id\": 1 }\n"
+  version: v0.34
+  license:
+    name: Apache 2.0
+    url: https://github.com/tendermint/tendermint/blob/main/LICENSE
+servers:
+- url: https://rpc.cosmos.network
+  description: Cosmos mainnet node to interact with the Tendermint RPC
+- url: http://localhost:26657
+  description: Interact with the Tendermint RPC locally on your device
+tags:
+- name: Websocket
+  description: Subscribe/unsubscribe are reserved for websocket events.
+paths:
+  /subscribe:
+    get:
+      summary: Subscribe for events via WebSocket.
+      tags:
+      - Websocket
+      operationId: subscribe
+      description: "To tell which events you want, you need to provide a query. query is a\nstring, which has a form: \"condition AND condition ...\" (no OR at the\nmoment). condition has a form: \"key operation operand\". key is a string with\na restricted set of possible symbols ( \\t\\n\\r\\\\()\"'=>< are not allowed).\noperation can be \"=\", \"<\", \"<=\", \">\", \">=\", \"CONTAINS\" AND \"EXISTS\". operand\ncan be a string (escaped with single quotes), number, date or time.\n\nExamples:\n      tm.event = 'NewBlock'               # new blocks\n      tm.event = 'CompleteProposal'       # node got a complete proposal\n      tm.event = 'Tx' AND tx.hash = 'XYZ' # single transaction\n      tm.event = 'Tx' AND tx.height = 5   # all txs of the fifth block\n      tx.height = 5                       # all txs of the fifth block\n\nTendermint provides a few predefined keys: tm.event, tx.hash and tx.height.\nNote for transactions, you can define additional keys by providing events with\nDeliverTx response.\n\nimport (\n    abci \"github.com/tendermint/tendermint/abci/types\"\n    \"github.com/tendermint/tendermint/libs/pubsub/query\"\n)\n\nabci.ResponseDeliverTx{\n  Events: []abci.Event{\n      {\n          Type: \"rewards.withdraw\",\n          Attributes: abci.EventAttribute{\n              {Key: []byte(\"address\"), Value: []byte(\"AddrA\"), Index: true},\n              {Key: []byte(\"source\"), Value: []byte(\"SrcX\"), Index: true},\n              {Key: []byte(\"amount\"), Value: []byte(\"...\"), Index: true},\n              {Key: []byte(\"balance\"), Value: []byte(\"...\"), Index: true},\n          },\n      },\n      {\n          Type: \"rewards.withdraw\",\n          Attributes: abci.EventAttribute{\n              {Key: []byte(\"address\"), Value: []byte(\"AddrB\"), Index: true},\n              {Key: []byte(\"source\"), Value: []byte(\"SrcY\"), Index: true},\n              {Key: []byte(\"amount\"), Value: []byte(\"...\"), Index: true},\n              {Key: []byte(\"balance\"), Value: []byte(\"...\"), Index: true},\n          },\n      },\n      {\n          Type: \"transfer\",\n          Attributes: abci.EventAttribute{\n              {Key: []byte(\"sender\"), Value: []byte(\"AddrC\"), Index: true},\n              {Key: []byte(\"recipient\"), Value: []byte(\"AddrD\"), Index: true},\n              {Key: []byte(\"amount\"), Value: []byte(\"...\"), Index: true},\n          },\n      },\n  },\n}\n\nAll events are indexed by a composite key of the form {eventType}.{evenAttrKey}.\nIn the above examples, the following keys would be indexed:\n   - rewards.withdraw.address\n   - rewards.withdraw.source\n   - rewards.withdraw.amount\n   - rewards.withdraw.balance\n   - transfer.sender\n   - transfer.recipient\n   - transfer.amount\n\nMultiple event types with duplicate keys are allowed and are meant to\ncategorize unique and distinct events. In the above example, all events\nindexed under the key `rewards.withdraw.address` will have the following\nvalues stored and queryable:\n\n   - AddrA\n   - AddrB\n\nTo create a query for txs where address AddrA withdrew rewards:\nquery.MustParse(\"tm.event = 'Tx' AND rewards.withdraw.address = 'AddrA'\")\n\nTo create a query for txs where address AddrA withdrew rewards from source Y:\nquery.MustParse(\"tm.event = 'Tx' AND rewards.withdraw.address = 'AddrA' AND rewards.withdraw.source = 'Y'\")\n\nTo create a query for txs where AddrA transferred funds:\nquery.MustParse(\"tm.event = 'Tx' AND transfer.sender = 'AddrA'\")\n\nThe following queries would return no results:\nquery.MustParse(\"tm.event = 'Tx' AND transfer.sender = 'AddrZ'\")\nquery.MustParse(\"tm.event = 'Tx' AND rewards.withdraw.address = 'AddrZ'\")\nquery.MustParse(\"tm.event = 'Tx' AND rewards.withdraw.source = 'W'\")\n\nSee list of all possible events here\nhttps://godoc.org/github.com/tendermint/tendermint/types#pkg-constants\n\nFor complete query syntax, check out\nhttps://godoc.org/github.com/tendermint/tendermint/libs/pubsub/query.\n\n```go\nimport rpchttp \"github.com/tendermint/rpc/client/http\"\nimport \"github.com/tendermint/tendermint/types\"\n\nclient := rpchttp.New(\"tcp:0.0.0.0:26657\", \"/websocket\")\nerr := client.Start()\nif err != nil {\n  handle error\n}\ndefer client.Stop()\nctx, cancel := context.WithTimeout(context.Background(), 1 * time.Second)\ndefer cancel()\nquery := \"tm.event = 'Tx' AND tx.height = 3\"\ntxs, err := client.Subscribe(ctx, \"test-client\", query)\nif err != nil {\n  handle error\n}\n\ngo func() {\n for e := range txs {\n   fmt.Println(\"got \", e.Data.(types.EventDataTx))\n   }\n}()\n```\n\nNOTE: if you're not reading events fast enough, Tendermint might\nterminate the subscription.\n"
+      parameters:
+      - in: query
+        name: query
+        required: true
+        schema:
+          type: string
+          example: tm.event = 'Tx' AND tx.height = 5
+        description: 'query is a string, which has a form: "condition AND condition ..." (no OR at the
+
+          moment). condition has a form: "key operation operand". key is a string with
+
+          a restricted set of possible symbols ( \t\n\r\\()"''=>< are not allowed).
+
+          operation can be "=", "<", "<=", ">", ">=", "CONTAINS". operand can be a
+
+          string (escaped with single quotes), number, date or time.
+
+          '
+      responses:
+        '200':
+          description: empty answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        '500':
+          description: empty error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /unsubscribe:
+    get:
+      summary: Unsubscribe from event on Websocket
+      tags:
+      - Websocket
+      operationId: unsubscribe
+      description: "```go\nclient := rpchttp.New(\"tcp:0.0.0.0:26657\", \"/websocket\")\nerr := client.Start()\nif err != nil {\n   handle error\n}\ndefer client.Stop()\nquery := \"tm.event = 'Tx' AND tx.height = 3\"\nerr = client.Unsubscribe(context.Background(), \"test-client\", query)\nif err != nil {\n   handle error\n}\n```\n"
+      parameters:
+      - in: query
+        name: query
+        required: true
+        schema:
+          type: string
+          example: tm.event = 'Tx' AND tx.height = 5
+        description: 'query is a string, which has a form: "condition AND condition ..." (no OR at the
+
+          moment). condition has a form: "key operation operand". key is a string with
+
+          a restricted set of possible symbols ( \t\n\r\\()"''=>< are not allowed).
+
+          operation can be "=", "<", "<=", ">", ">=", "CONTAINS". operand can be a
+
+          string (escaped with single quotes), number, date or time.
+
+          '
+      responses:
+        '200':
+          description: Answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        '500':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /unsubscribe_all:
+    get:
+      summary: Unsubscribe from all events via WebSocket
+      tags:
+      - Websocket
+      operationId: unsubscribe_all
+      description: 'Unsubscribe from all events via WebSocket
+
+        '
+      responses:
+        '200':
+          description: empty answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptyResponse'
+        '500':
+          description: empty error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    JSONRPC:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 0
+        jsonrpc:
+          type: string
+          example: '2.0'
+    ErrorResponse:
+      description: Error Response
+      allOf:
+      - $ref: '#/components/schemas/JSONRPC'
+      - type: object
+        properties:
+          error:
+            type: string
+            example: Description of failure
+    EmptyResponse:
+      description: Empty Response
+      allOf:
+      - $ref: '#/components/schemas/JSONRPC'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties: {}

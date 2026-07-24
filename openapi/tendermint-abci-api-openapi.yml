@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: Tendermint RPC ABCI API
+  contact:
+    name: Tendermint RPC
+    url: https://github.com/tendermint/tendermint/issues/new/choose
+  description: "Tendermint supports the following RPC protocols:\n\n* URI over HTTP\n* JSONRPC over HTTP\n* JSONRPC over websockets\n\n## Configuration\n\nRPC can be configured by tuning parameters under `[rpc]` table in the\n`$TMHOME/config/config.toml` file or by using the `--rpc.X` command-line\nflags.\n\nDefault rpc listen address is `tcp://0.0.0.0:26657`.\nTo set another address, set the `laddr` config parameter to desired value.\nCORS (Cross-Origin Resource Sharing) can be enabled by setting\n`cors_allowed_origins`, `cors_allowed_methods`, `cors_allowed_headers`\nconfig parameters.\n\n## Arguments\n\nArguments which expect strings or byte arrays may be passed as quoted\nstrings, like `\"abc\"` or as `0x`-prefixed strings, like `0x616263`.\n\n## URI/HTTP\n\nA REST like interface.\n\n    curl localhost:26657/block?height=5\n\n## JSONRPC/HTTP\n\nJSONRPC requests can be POST'd to the root RPC endpoint via HTTP.\n\n    curl --header \"Content-Type: application/json\" --request POST --data '{\"method\": \"block\", \"params\": [\"5\"], \"id\": 1}' localhost:26657\n\n## JSONRPC/websockets\n\nJSONRPC requests can be also made via websocket.\nThe websocket endpoint is at `/websocket`, e.g. `localhost:26657/websocket`.\nAsynchronous RPC functions like event `subscribe` and `unsubscribe` are\nonly available via websockets.\n\nExample using https://github.com/hashrocket/ws:\n\n    ws ws://localhost:26657/websocket\n    > { \"jsonrpc\": \"2.0\", \"method\": \"subscribe\", \"params\": [\"tm.event='NewBlock'\"], \"id\": 1 }\n"
+  version: v0.34
+  license:
+    name: Apache 2.0
+    url: https://github.com/tendermint/tendermint/blob/main/LICENSE
+servers:
+- url: https://rpc.cosmos.network
+  description: Cosmos mainnet node to interact with the Tendermint RPC
+- url: http://localhost:26657
+  description: Interact with the Tendermint RPC locally on your device
+tags:
+- name: ABCI
+  description: ABCI APIs
+paths:
+  /abci_info:
+    get:
+      summary: Get info about the application.
+      operationId: abci_info
+      tags:
+      - ABCI
+      description: 'Get info about the application.
+
+
+        Upon success, the `Cache-Control` header will be set with the default
+
+        maximum age.
+
+        '
+      responses:
+        '200':
+          description: Get some info about the application.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ABCIInfoResponse'
+        '500':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /abci_query:
+    get:
+      summary: Query the application for some information.
+      operationId: abci_query
+      parameters:
+      - in: query
+        name: path
+        description: Path to the data ("/a/b/c")
+        required: true
+        schema:
+          type: string
+          example: /a/b/c
+      - in: query
+        name: data
+        description: Data
+        required: true
+        schema:
+          type: string
+          example: IHAVENOIDEA
+      - in: query
+        name: height
+        description: Height (0 means latest)
+        required: false
+        schema:
+          type: integer
+          example: 1
+          default: 0
+      - in: query
+        name: prove
+        description: Include proofs of the transactions inclusion in the block
+        required: false
+        schema:
+          type: boolean
+          example: true
+          default: false
+      tags:
+      - ABCI
+      description: 'Query the application for some information.
+
+        '
+      responses:
+        '200':
+          description: Response of the submitted query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ABCIQueryResponse'
+        '500':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ABCIQueryResponse:
+      type: object
+      required:
+      - error
+      - result
+      - id
+      - jsonrpc
+      properties:
+        error:
+          type: string
+          example: ''
+        result:
+          required:
+          - response
+          properties:
+            response:
+              required:
+              - log
+              - height
+              - proof
+              - value
+              - key
+              - index
+              - code
+              properties:
+                log:
+                  type: string
+                  example: exists
+                height:
+                  type: string
+                  example: '0'
+                proof:
+                  type: string
+                  example: 010114FED0DAD959F36091AD761C922ABA3CBF1D8349990101020103011406AA2262E2F448242DF2C2607C3CDC705313EE3B0001149D16177BC71E445476174622EA559715C293740C
+                value:
+                  type: string
+                  example: '61626364'
+                key:
+                  type: string
+                  example: '61626364'
+                index:
+                  type: string
+                  example: '-1'
+                code:
+                  type: string
+                  example: '0'
+              type: object
+          type: object
+        id:
+          type: integer
+          example: 0
+        jsonrpc:
+          type: string
+          example: '2.0'
+    JSONRPC:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 0
+        jsonrpc:
+          type: string
+          example: '2.0'
+    ABCIInfoResponse:
+      type: object
+      required:
+      - jsonrpc
+      - id
+      properties:
+        jsonrpc:
+          type: string
+          example: '2.0'
+        id:
+          type: integer
+          example: 0
+        result:
+          required:
+          - response
+          properties:
+            response:
+              required:
+              - data
+              - app_version
+              - version
+              properties:
+                data:
+                  type: string
+                  example: '{"size":0}'
+                version:
+                  type: string
+                  example: 0.16.1
+                app_version:
+                  type: string
+                  example: '1314126'
+              type: object
+          type: object
+    ErrorResponse:
+      description: Error Response
+      allOf:
+      - $ref: '#/components/schemas/JSONRPC'
+      - type: object
+        properties:
+          error:
+            type: string
+            example: Description of failure
