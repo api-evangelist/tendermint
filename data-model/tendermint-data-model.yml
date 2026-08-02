@@ -1,0 +1,72 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tendermint-rpc-openapi-original.yml
+notes: >-
+  Entity graph derived from the RPC response schemas and the Tendermint
+  consensus domain. Blockchain data is content-addressed by hash and ordered by
+  height; relationships below reflect how the RPC surfaces those objects.
+entities:
+  - name: Block
+    key: [height, hash]
+    surfaced_by: [block, block_by_hash, blockchain]
+    fields: [header, data, evidence, last_commit]
+  - name: BlockHeader
+    surfaced_by: [block, commit, blockchain]
+    fields: [chain_id, height, time, last_block_id, app_hash, proposer_address]
+  - name: Transaction
+    key: [hash]
+    surfaced_by: [tx, tx_search, broadcast_tx_sync, broadcast_tx_async, broadcast_tx_commit, check_tx]
+    fields: [hash, height, index, tx, tx_result, proof]
+  - name: Validator
+    key: [address]
+    surfaced_by: [validators]
+    fields: [address, pub_key, voting_power, proposer_priority]
+  - name: Commit
+    surfaced_by: [commit]
+    fields: [height, round, block_id, signatures]
+  - name: Evidence
+    surfaced_by: [broadcast_evidence, block]
+    fields: [type, height, time, validator]
+  - name: ConsensusState
+    surfaced_by: [consensus_state, dump_consensus_state, consensus_params]
+  - name: Genesis
+    surfaced_by: [genesis]
+    fields: [genesis_time, chain_id, initial_height, validators, app_hash]
+  - name: NodeStatus
+    surfaced_by: [status, net_info, health, abci_info]
+    fields: [node_info, sync_info, validator_info]
+  - name: MempoolTx
+    surfaced_by: [unconfirmed_txs, num_unconfirmed_txs]
+relationships:
+  - from: Block
+    to: BlockHeader
+    kind: has_one
+    via: header
+  - from: Block
+    to: Transaction
+    kind: has_many
+    via: data.txs
+  - from: Block
+    to: Evidence
+    kind: has_many
+    via: evidence
+  - from: Block
+    to: Commit
+    kind: has_one
+    via: last_commit
+  - from: Commit
+    to: Validator
+    kind: has_many
+    via: signatures
+  - from: Transaction
+    to: Block
+    kind: belongs_to
+    via: height
+  - from: Genesis
+    to: Validator
+    kind: has_many
+    via: validators
+  - from: Evidence
+    to: Validator
+    kind: belongs_to
+    via: validator

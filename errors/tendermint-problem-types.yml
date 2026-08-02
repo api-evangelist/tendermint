@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tendermint-rpc-openapi-original.yml
+format: jsonrpc-error
+envelope:
+  fields: [jsonrpc, id, error]
+  error_shape:
+    code: integer
+    message: string
+    data: string
+  note: >-
+    Every RPC operation returns HTTP 200 with a JSONRPC result on success, or
+    HTTP 500 carrying the ErrorResponse schema (jsonrpc/id/error) on failure.
+    Errors are transported in the JSONRPC error object rather than as
+    application/problem+json.
+problems:
+  - status: 500
+    title: RPC error
+    schema: ErrorResponse
+    description: >-
+      Generic JSONRPC error envelope returned for malformed requests, invalid
+      parameters, node-side failures, or ABCI query errors. The error.message
+      string carries the human-readable cause.
+    applies_to: all operations
+  - status: 500
+    title: Transaction broadcast error
+    schema: ErrorResponse
+    description: >-
+      Returned by broadcast_tx_sync / broadcast_tx_async / broadcast_tx_commit
+      / check_tx when the transaction fails encoding, CheckTx, or mempool
+      admission.
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#broadcast_tx_sync
+  - status: 500
+    title: Query error
+    schema: ErrorResponse
+    description: >-
+      Returned by abci_query / tx / tx_search / block / block_by_hash when the
+      requested height/hash/query is invalid or not found.
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#abci_query
+notes: >-
+  The spec models only 200 and 500 per operation, so a fine-grained
+  status→type catalog cannot be derived. ABCI-level application errors are
+  surfaced inside a 200 result via the tx_result.code / response.code fields
+  (non-zero code = application rejection), distinct from the transport-level
+  500 JSONRPC error.

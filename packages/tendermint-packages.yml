@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+source: https://pkg.go.dev/github.com/tendermint/tendermint
+notes: >-
+  Tendermint Core ships as a first-party Go module. The RPC HTTP/local clients
+  live under the same module. The project was renamed to CometBFT
+  (github.com/cometbft/cometbft) in 2023; the successor module is listed for
+  continuity. No separate published JS/Python/Java client packages are shipped
+  by the project itself — third-party language clients exist but are not
+  first-party and are intentionally omitted.
+packages:
+  - language: go
+    registry: go-modules
+    name: github.com/tendermint/tendermint
+    url: https://pkg.go.dev/github.com/tendermint/tendermint
+    install: go get github.com/tendermint/tendermint
+    latest: v0.35.9
+    license: Apache-2.0
+    official: true
+    notes: >-
+      Full node + BFT consensus engine. RPC clients under
+      github.com/tendermint/tendermint/rpc/client (http, local) and
+      core types under .../rpc/coretypes.
+  - language: go
+    registry: go-modules
+    name: github.com/cometbft/cometbft
+    url: https://pkg.go.dev/github.com/cometbft/cometbft
+    install: go get github.com/cometbft/cometbft
+    license: Apache-2.0
+    official: true
+    successor: true
+    notes: >-
+      Successor project — Tendermint Core was renamed to CometBFT. New
+      integrations should target this module.

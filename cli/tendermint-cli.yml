@@ -1,0 +1,43 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.tendermint.com/master/tendermint-core/using-tendermint.html
+binary: tendermint
+distributed_in: packages/tendermint-packages.yml
+install_methods:
+  - method: go-install
+    command: go install github.com/tendermint/tendermint/cmd/tendermint@latest
+  - method: source
+    command: make install (from the tendermint/tendermint repository)
+  - method: docker
+    command: docker run tendermint/tendermint
+notes: >-
+  The tendermint binary is the node operator CLI (not an API-consumer CLI). It
+  initializes, runs, and maintains a full node whose RPC surface is the API
+  documented in openapi/. Commands below are the primary command surface.
+commands:
+  - name: init
+    description: Initialize a node's config, genesis, and validator/node keys.
+  - name: start
+    description: Run the full node (consensus + RPC + P2P).
+  - name: node
+    description: Alias for start; run the node.
+  - name: version
+    description: Print the Tendermint version.
+  - name: show_node_id
+    description: Show this node's P2P node ID.
+  - name: show_validator
+    description: Show this node's validator public key.
+  - name: gen_validator
+    description: Generate a new validator keypair.
+  - name: gen_node_key
+    description: Generate a new node key.
+  - name: testnet
+    description: Initialize files for a multi-node testnet.
+  - name: unsafe_reset_all
+    description: Reset blockchain state, address book, and private validator state (destructive).
+  - name: reset_priv_validator
+    description: Reset the private validator's signing state.
+  - name: inspect
+    description: Run an inspect server over the node's stores for post-mortem debugging.
+  - name: rollback
+    description: Roll the state back one height to recover from an app hash mismatch.

@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/tendermint/tendermint
+versioning:
+  scheme: semver
+  current: v0.34
+  documented_lines: [v0.32, v0.33, v0.34, v0.35]
+  docs: https://docs.tendermint.com/
+deprecation:
+  deprecated: true
+  policy: >-
+    Tendermint Core has reached end-of-life and was renamed to CometBFT
+    (github.com/cometbft/cometbft). New development should target CometBFT.
+    The v0.34.x line is the final Tendermint-branded release train.
+  successor: https://github.com/cometbft/cometbft
+  successor_docs: https://docs.cometbft.com/
+  sunset_header: false
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    Tendermint Core is self-hosted node software; there is no vendor-operated
+    SLA. The RPC endpoint availability depends on the node operator. A public
+    Cosmos mainnet RPC (https://rpc.cosmos.network) is community-operated.
+status_page: null
+deprecated_operations:
+  - openapi/tendermint-rpc-openapi-original.yml#dial_seeds
+  - openapi/tendermint-rpc-openapi-original.yml#dial_peers
+notes: >-
+  dial_seeds and dial_peers are tagged "Unsafe" in the RPC spec and are
+  disabled unless the node is started with unsafe RPC enabled.

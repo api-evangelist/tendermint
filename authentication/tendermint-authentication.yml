@@ -1,0 +1,17 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tendermint-rpc-openapi-original.yml
+summary:
+  types: []
+  api_key_in: []
+  oauth2_flows: []
+  model: none
+schemes: []
+notes: >-
+  The Tendermint RPC OpenAPI declares no securitySchemes. Node RPC is
+  unauthenticated by design — access control is a deployment concern (bind
+  address, reverse proxy, firewall, allowlist). The "Unsafe" tagged operations
+  (dial_seeds, dial_peers) are additionally gated behind an unsafe-RPC node
+  flag rather than any token. Operators typically restrict RPC exposure at the
+  network layer; there is no OAuth, API key, or bearer token surface to
+  document.

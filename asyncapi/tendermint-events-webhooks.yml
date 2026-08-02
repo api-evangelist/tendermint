@@ -1,0 +1,56 @@
+generated: '2026-07-21'
+method: derived
+type: Webhooks
+source: openapi/tendermint-rpc-openapi-original.yml
+transport: websocket
+endpoint: /websocket
+subscribe_operation: openapi/tendermint-rpc-openapi-original.yml#subscribe
+unsubscribe_operations:
+  - openapi/tendermint-rpc-openapi-original.yml#unsubscribe
+  - openapi/tendermint-rpc-openapi-original.yml#unsubscribe_all
+query_language: >-
+  Subscriptions use a tm.event query, e.g. { "method": "subscribe",
+  "params": ["tm.event='NewBlock'"] }. Queries can combine tm.event with
+  application-defined tags (e.g. tm.event='Tx' AND transfer.recipient='...').
+notes: >-
+  Tendermint has no HTTP webhook callback surface; instead it exposes a
+  real-time event stream over JSONRPC websockets. Clients subscribe to named
+  events. This is the provider's event/streaming surface (satisfies the
+  event/webhook family). Event types below are the documented tm.event values.
+events:
+  - name: NewBlock
+    query: tm.event='NewBlock'
+    description: Emitted when a new block is committed.
+  - name: NewBlockHeader
+    query: tm.event='NewBlockHeader'
+    description: Emitted with the header of each newly committed block.
+  - name: Tx
+    query: tm.event='Tx'
+    description: Emitted for each transaction delivered in a block; filterable by app tags.
+  - name: ValidatorSetUpdates
+    query: tm.event='ValidatorSetUpdates'
+    description: Emitted when the validator set changes.
+  - name: CompleteProposal
+    query: tm.event='CompleteProposal'
+    description: Emitted when a complete proposal is received during consensus.
+  - name: NewRound
+    query: tm.event='NewRound'
+    description: Emitted at the start of a new consensus round.
+  - name: NewRoundStep
+    query: tm.event='NewRoundStep'
+    description: Emitted on each consensus round-step transition.
+  - name: Vote
+    query: tm.event='Vote'
+    description: Emitted when a vote is received.
+  - name: Lock
+    query: tm.event='Lock'
+    description: Emitted when a validator locks on a block.
+  - name: Unlock
+    query: tm.event='Unlock'
+    description: Emitted when a validator unlocks.
+  - name: TimeoutPropose
+    query: tm.event='TimeoutPropose'
+    description: Emitted on propose timeout.
+  - name: TimeoutWait
+    query: tm.event='TimeoutWait'
+    description: Emitted on prevote/precommit wait timeout.

@@ -1,0 +1,31 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Tendermint RPC
+  version: 1.0.0
+extends: openapi/tendermint-rpc-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-21'
+      x-apievangelist-transports: [uri-http, jsonrpc-http, jsonrpc-websocket]
+      x-apievangelist-successor: https://github.com/cometbft/cometbft
+      x-apievangelist-auth-model: none
+  - target: $.info
+    update:
+      x-apievangelist-links:
+        events: asyncapi/tendermint-events-webhooks.yml
+        conventions: conventions/tendermint-conventions.yml
+        errors: errors/tendermint-problem-types.yml
+        data_model: data-model/tendermint-data-model.yml
+        lifecycle: lifecycle/tendermint-lifecycle.yml
+  - target: "$.paths['/dial_seeds'].get"
+    update:
+      x-apievangelist-unsafe: true
+      x-apievangelist-note: Requires the node to be started with unsafe RPC enabled.
+  - target: "$.paths['/dial_peers'].get"
+    update:
+      x-apievangelist-unsafe: true
+      x-apievangelist-note: Requires the node to be started with unsafe RPC enabled.
+  - target: "$.paths['/broadcast_tx_commit'].get"
+    update:
+      x-apievangelist-mutating: true

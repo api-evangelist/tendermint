@@ -1,0 +1,30 @@
+# Tendermint
+
+> Tendermint is a core contributor to the Cosmos Network, building Tendermint Core — a best-in-class Byzantine Fault Tolerant (BFT) consensus engine for state-machine replication — along with the Cosmos SDK and the IBC protocol. Tendermint Core was renamed to CometBFT; new development targets that successor. The primary developer-facing API is the Tendermint RPC: a JSONRPC 2.0 interface (also exposed as a REST-URI form and over websockets) for querying chain state and broadcasting transactions to a node.
+
+## APIs
+
+- [Tendermint RPC (OpenAPI)](openapi/tendermint-rpc-openapi-original.yml): 30 operations over JSONRPC/HTTP, REST-URI, and websockets — status, blocks, transactions, validators, ABCI query, tx/block search, mempool, and event subscription. Unauthenticated node RPC.
+
+## Specs & artifacts
+
+- [Event / webhook surface](asyncapi/tendermint-events-webhooks.yml): websocket event subscription (NewBlock, Tx, ValidatorSetUpdates, …) via the tm.event query language.
+- [API conventions](conventions/tendermint-conventions.yml): transports, page-number pagination (page/per_page), encoding, error envelope.
+- [Error catalog](errors/tendermint-problem-types.yml): JSONRPC error envelope.
+- [Data model](data-model/tendermint-data-model.yml): Block, Transaction, Validator, Commit, Evidence, Genesis relationships.
+- [Authentication](authentication/tendermint-authentication.yml): none — node RPC is unauthenticated, controlled at the network layer.
+- [Lifecycle](lifecycle/tendermint-lifecycle.yml): semver (v0.34.x), deprecated in favor of CometBFT.
+- [Conformance](conformance/tendermint-conformance.yml): JSONRPC 2.0, REST-URI, websocket subscriptions.
+- [Packages](packages/tendermint-packages.yml): Go module github.com/tendermint/tendermint (Apache-2.0).
+- [CLI](cli/tendermint-cli.yml): the tendermint node operator binary.
+- [Agent skills](skills/_index.yml): query-chain-state, broadcast-and-track-transaction.
+
+## Docs
+
+- [Tendermint Core docs](https://docs.tendermint.com/)
+- [RPC reference](https://docs.tendermint.com/master/rpc/)
+- [GitHub](https://github.com/tendermint/tendermint)
+- [CometBFT (successor)](https://github.com/cometbft/cometbft)
+- [Cosmos SDK docs](https://docs.cosmos.network/)
+- [Security policy](https://github.com/tendermint/tendermint/blob/main/SECURITY.md)
+- [Changelog](https://github.com/tendermint/tendermint/blob/main/CHANGELOG.md)

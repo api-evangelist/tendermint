@@ -1,0 +1,54 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tendermint-rpc-openapi-original.yml
+transports:
+  - name: uri-http
+    description: REST-like URI interface, e.g. GET /block?height=5
+  - name: jsonrpc-http
+    description: JSONRPC 2.0 POSTed to the root RPC endpoint
+  - name: jsonrpc-websocket
+    endpoint: /websocket
+    description: >-
+      JSONRPC 2.0 over websockets; asynchronous methods (subscribe/unsubscribe)
+      are available ONLY on this transport.
+authentication:
+  style: none
+  detail: Unauthenticated node RPC; access controlled at the network layer.
+  see: authentication/tendermint-authentication.yml
+idempotency:
+  supported: false
+  detail: >-
+    No idempotency-key mechanism. Transaction broadcast is inherently
+    non-idempotent at the RPC layer; deduplication happens in the mempool by
+    transaction hash. Query operations are naturally read-only/repeatable.
+pagination:
+  style: page-number
+  params: [page, per_page]
+  applies_to: [tx_search, block_search, validators]
+  response_fields: [total_count]
+  detail: >-
+    Search endpoints accept page (1-indexed) and per_page (default 30, max 100)
+    query parameters; the response carries total_count so clients can compute
+    remaining pages.
+encoding:
+  detail: >-
+    String / byte-array arguments may be passed as quoted strings ("abc") or as
+    0x-prefixed hex ("0x616263"). Transactions and hashes are base64 or hex
+    encoded per the formatting rules in the docs.
+request_tracing:
+  detail: >-
+    JSONRPC requests carry a client-supplied id which is echoed back in the
+    response for correlation. No server-issued request-id header.
+error_envelope:
+  detail: JSONRPC error object (code/message/data); see errors/tendermint-problem-types.yml
+versioning:
+  scheme: semver
+  detail: RPC is versioned with the node release (v0.34.x). See lifecycle/tendermint-lifecycle.yml
+rate_limiting:
+  detail: >-
+    No protocol-level rate limiting; throttling (if any) is imposed by the node
+    operator or fronting reverse proxy.
+events:
+  detail: >-
+    Real-time event streaming via websocket subscribe with a tm.event query
+    (e.g. tm.event='NewBlock'). See asyncapi/tendermint-events-webhooks.yml

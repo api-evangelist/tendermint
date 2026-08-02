@@ -1,0 +1,24 @@
+{
+  "provider": "tendermint",
+  "sources": [
+    "tendermint-abci-api-openapi.yml",
+    "tendermint-info-api-openapi.yml",
+    "tendermint-tx-api-openapi.yml",
+    "tendermint-unsafe-api-openapi.yml",
+    "tendermint-websocket-api-openapi.yml"
+  ],
+  "outputs": [
+    "tendermint-abci-api-openapi.yml",
+    "tendermint-info-api-openapi.yml",
+    "tendermint-tx-api-openapi.yml",
+    "tendermint-unsafe-api-openapi.yml",
+    "tendermint-websocket-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [
+    "tendermint-info-api-openapi.yml: dangling $ref: #/components/schemas/BlockSearchResponse"
+  ],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

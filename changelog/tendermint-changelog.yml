@@ -1,0 +1,50 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/tendermint/tendermint/blob/main/CHANGELOG.md
+scheme: semver
+current_version: v0.34.24
+notes: >-
+  Tendermint Core is in maintenance / end-of-life; active development moved to
+  CometBFT (github.com/cometbft/cometbft). The v0.34.x line is the last
+  Tendermint-branded release train. Dates reflect the CHANGELOG.md at the time
+  of harvest.
+entries:
+  - version: v0.34.24
+    date: '2022-11-21'
+    breaking: false
+    highlights:
+      - Remove useless whitespace in RPC output
+      - Fix Cache-Control header handling on RPC responses
+  - version: v0.34.23
+    date: '2022-11-09'
+    breaking: false
+    highlights:
+      - Add Prometheus metrics for P2P bandwidth monitoring
+      - Add Cache-Control headers to RPC responses
+  - version: v0.34.22
+    date: '2022-10-01'
+    breaking: false
+    highlights:
+      - Fix bug discovered during v0.34 QA process
+      - Add HTTPS WebSocket support
+  - version: v0.34.21
+    date: '2022-08-04'
+    breaking: false
+    highlights:
+      - Add storage configuration section with discard_abci_responses flag
+  - version: v0.34.20
+    date: '2022-06-23'
+    breaking: false
+    highlights:
+      - Introduce prioritized mempool (known issue when combined with ABCI socket)
+  - version: v0.34.19
+    date: '2022-04-13'
+    breaking: false
+    highlights:
+      - CLI reset command fixes
+  - version: v0.34.18
+    date: '2022-03-31'
+    breaking: true
+    highlights:
+      - Fix unsafe-reset-all panic bug
+      - CLI / RPC / config changes

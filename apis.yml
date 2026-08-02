@@ -1,8 +1,28 @@
 aid: tendermint
 name: Tendermint
-description: 'Tendermint is a company surfaced as a portfolio company of polychain and added to the API
-  Evangelist network as a stub for enrichment. Sector: infrastructure. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Tendermint is a core contributor to the Cosmos Network and the original
+  developer of Tendermint Core, a best-in-class Byzantine Fault Tolerant (BFT)
+  consensus engine for state-machine replication, alongside the Cosmos SDK
+  blockchain application framework and the IBC inter-blockchain communication
+  protocol. Its primary developer-facing API is the Tendermint RPC — a JSONRPC
+  2.0 interface (also exposed as a REST-URI form and over websockets) for
+  querying chain state, blocks, transactions and validators, and broadcasting
+  transactions to a node. Tendermint Core has since been renamed to CometBFT,
+  which is the actively maintained successor.
+accessModel:
+  pricing: unknown
+  onboarding: open
+  trial: false
+  try_now: false
+  public: true
+  label: Open access
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://raw.githubusercontent.com/api-evangelist/tendermint/main/apis.yml
 url: https://raw.githubusercontent.com/api-evangelist/tendermint/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -12,16 +32,127 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1
 tags:
 - Company
 - Infrastructure
-apis: []
+- Blockchain
+- Consensus
+- Cosmos
+- Web3
+- JSON-RPC
+- Node
+apis:
+- aid: tendermint:tendermint-abci-api
+  name: Tendermint ABCI API
+  description: ABCI APIs
+  humanURL: https://docs.tendermint.com/master/rpc/
+  baseURL: https://rpc.cosmos.network
+  tags:
+  - ABCI
+  properties:
+  - type: OpenAPI
+    url: openapi/tendermint-abci-api-openapi.yml
+- aid: tendermint:tendermint-info-api
+  name: Tendermint Info API
+  description: Informations about the node APIs
+  humanURL: https://docs.tendermint.com/master/rpc/
+  baseURL: https://rpc.cosmos.network
+  tags:
+  - Info
+  properties:
+  - type: OpenAPI
+    url: openapi/tendermint-info-api-openapi.yml
+- aid: tendermint:tendermint-tx-api
+  name: Tendermint Tx API
+  description: Transactions broadcast APIs
+  humanURL: https://docs.tendermint.com/master/rpc/
+  baseURL: https://rpc.cosmos.network
+  tags:
+  - Tx
+  properties:
+  - type: OpenAPI
+    url: openapi/tendermint-tx-api-openapi.yml
+- aid: tendermint:tendermint-unsafe-api
+  name: Tendermint Unsafe API
+  description: Unsafe APIs
+  humanURL: https://docs.tendermint.com/master/rpc/
+  baseURL: https://rpc.cosmos.network
+  tags:
+  - Unsafe
+  properties:
+  - type: OpenAPI
+    url: openapi/tendermint-unsafe-api-openapi.yml
+- aid: tendermint:tendermint-websocket-api
+  name: Tendermint Websocket API
+  description: Subscribe/unsubscribe are reserved for websocket events.
+  humanURL: https://docs.tendermint.com/master/rpc/
+  baseURL: https://rpc.cosmos.network
+  tags:
+  - Websocket
+  properties:
+  - type: OpenAPI
+    url: openapi/tendermint-websocket-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/tendermint-domain-security.yml
 - type: Website
   url: https://tendermint.com
+- type: Documentation
+  url: https://docs.tendermint.com/
+- type: APIReference
+  url: https://docs.tendermint.com/master/rpc/
+- type: GettingStarted
+  url: https://docs.tendermint.com/master/introduction/quick-start.html
+- type: GitHubOrganization
+  url: https://github.com/tendermint
+- type: Blog
+  url: https://medium.com/tendermint
+- type: Support
+  url: https://forum.cosmos.network/c/tendermint
+- type: Packages
+  url: packages/tendermint-packages.yml
+- type: SDKs
+  url: packages/tendermint-packages.yml
+- type: CLI
+  url: cli/tendermint-cli.yml
+- type: MCPServer
+  url: mcp/tendermint-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/tendermint-llms.txt
+- type: Authentication
+  url: authentication/tendermint-authentication.yml
+- type: Conventions
+  url: conventions/tendermint-conventions.yml
+- type: ErrorCatalog
+  url: errors/tendermint-problem-types.yml
+- type: DataModel
+  url: data-model/tendermint-data-model.yml
+- type: Conformance
+  url: conformance/tendermint-conformance.yml
+- type: Lifecycle
+  url: lifecycle/tendermint-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/tendermint-lifecycle.yml
+- type: ChangeLog
+  url: changelog/tendermint-changelog.yml
+- type: Webhooks
+  url: asyncapi/tendermint-events-webhooks.yml
+- type: Protobuf
+  url: grpc/tendermint-abci.proto
+- type: VulnerabilityDisclosure
+  url: security/tendermint-vulnerability-disclosure.yml
+- type: Security
+  url: https://github.com/tendermint/tendermint/blob/main/SECURITY.md

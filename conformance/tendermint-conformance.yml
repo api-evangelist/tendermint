@@ -1,0 +1,40 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tendermint-rpc-openapi-original.yml
+standards:
+  - id: jsonrpc-2.0
+    conforms: true
+    evidence: >-
+      RPC supports JSONRPC 2.0 over HTTP and over websockets; responses carry
+      jsonrpc "2.0", id, and result/error envelope fields.
+  - id: rest-uri
+    conforms: true
+    evidence: >-
+      Same methods are exposed as a REST-like URI interface over HTTP
+      (e.g. GET /block?height=5).
+  - id: websocket-subscriptions
+    conforms: true
+    evidence: >-
+      subscribe/unsubscribe/unsubscribe_all operations provide event streaming
+      over the /websocket endpoint using a tm.event query language.
+  - id: oauth2
+    conforms: false
+  - id: openid-connect
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use a JSONRPC error envelope (jsonrpc/id/error) rather than
+      application/problem+json.
+  - id: rfc7807-problem-details
+    conforms: false
+  - id: json-api
+    conforms: false
+  - id: fapi
+    conforms: false
+  - id: scim
+    conforms: false
+notes: >-
+  Tendermint RPC is a blockchain node consensus/query API. Its cross-cutting
+  conformance is to JSON-RPC 2.0 (and a parallel REST-URI form) rather than to
+  identity/finance standards.

@@ -1,0 +1,85 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/tendermint-rpc-openapi-original.yml
+server:
+  name: tendermint-rpc
+  transport: http
+  url: null
+notes: >-
+  No official Tendermint MCP server was found. This is a candidate tool list
+  derived one-per-operation from the RPC OpenAPI. Read-only query operations
+  are the natural agent-safe surface; broadcast/unsafe operations should be
+  gated. Point the server at a specific node's RPC endpoint (e.g.
+  https://rpc.cosmos.network or a local node at :26657).
+tools:
+  - name: get_health
+    description: Node health check
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#health
+  - name: get_status
+    description: Node status, sync info, and validator info
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#status
+  - name: get_net_info
+    description: Peer/network information
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#net_info
+  - name: get_blockchain
+    description: Block headers within a min/max height range
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#blockchain
+  - name: get_block
+    description: Block at a given height
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#block
+  - name: get_block_by_hash
+    description: Block by hash
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#block_by_hash
+  - name: get_block_results
+    description: ABCI results for a block
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#block_results
+  - name: get_commit
+    description: Commit for a height
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#commit
+  - name: get_validators
+    description: Validator set at a height (paginated)
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#validators
+  - name: get_genesis
+    description: Genesis file
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#genesis
+  - name: get_consensus_params
+    description: Consensus parameters at a height
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#consensus_params
+  - name: get_tx
+    description: Transaction by hash with proof
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#tx
+  - name: search_tx
+    description: Search transactions by event query (paginated)
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#tx_search
+  - name: search_block
+    description: Search blocks by event query (paginated)
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#block_search
+  - name: get_unconfirmed_txs
+    description: List mempool (unconfirmed) transactions
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#unconfirmed_txs
+  - name: get_num_unconfirmed_txs
+    description: Count of mempool transactions
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#num_unconfirmed_txs
+  - name: abci_info
+    description: ABCI application info
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#abci_info
+  - name: abci_query
+    description: Query the ABCI application state
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#abci_query
+  - name: check_tx
+    description: Validate a transaction against the mempool without broadcasting
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#check_tx
+    guard: write-adjacent
+  - name: broadcast_tx_sync
+    description: Broadcast a transaction, wait for CheckTx
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#broadcast_tx_sync
+    guard: mutating
+  - name: broadcast_tx_commit
+    description: Broadcast a transaction, wait for commit
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#broadcast_tx_commit
+    guard: mutating
+  - name: broadcast_evidence
+    description: Submit evidence of validator misbehavior
+    source_operation: openapi/tendermint-rpc-openapi-original.yml#broadcast_evidence
+    guard: mutating

@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/tendermint-rpc-openapi-original.yml
+skills:
+  - file: tendermint-query-chain-state.md
+    name: Query Tendermint chain state
+    api: openapi/tendermint-rpc-openapi-original.yml
+    operations: [health, status, block, tx, tx_search, validators]
+  - file: tendermint-broadcast-and-track-transaction.md
+    name: Broadcast and track a transaction
+    api: openapi/tendermint-rpc-openapi-original.yml
+    operations: [check_tx, broadcast_tx_sync, broadcast_tx_commit, tx, subscribe]
