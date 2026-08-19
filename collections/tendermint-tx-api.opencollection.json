@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tendermint RPC ABCI Tx API",
+    "version": "v0.34"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tx",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns with the response from CheckTx. Does not wait for DeliverTx result.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/broadcast_tx_sync",
+            "params": [
+              {
+                "name": "tx",
+                "value": "456",
+                "type": "query",
+                "description": "The transaction"
+              }
+            ]
+          },
+          "docs": "If you want to be sure that the transaction is included in a block, you can\nsubscribe for the result using JSONRPC via a websocket. See\nhttps://docs.tendermint.com/v0.34/app-dev/subscribing-to-events-via-websocket.html\nIf you haven't received anything after a couple of blocks, resend it. If the\nsame happens again, send it to some other node. A few reasons why it could\nhappen:\n\n1. malicious node can drop or pretend it had committed your tx\n2. malicious proposer (not necessary the one you're commu"
+        },
+        {
+          "info": {
+            "name": "Returns right away, with no response. Does not wait for CheckTx nor DeliverTx results.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/broadcast_tx_async",
+            "params": [
+              {
+                "name": "tx",
+                "value": "",
+                "type": "query",
+                "description": "The transaction"
+              }
+            ]
+          },
+          "docs": "If you want to be sure that the transaction is included in a block, you can\nsubscribe for the result using JSONRPC via a websocket. See\nhttps://docs.tendermint.com/v0.34/app-dev/subscribing-to-events-via-websocket.html\nIf you haven't received anything after a couple of blocks, resend it. If the\nsame happens again, send it to some other node. A few reasons why it could\nhappen:\n\n1. malicious node can drop or pretend it had committed your tx\n2. malicious proposer (not necessary the one you're commu"
+        },
+        {
+          "info": {
+            "name": "Returns with the responses from CheckTx and DeliverTx.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/broadcast_tx_commit",
+            "params": [
+              {
+                "name": "tx",
+                "value": "",
+                "type": "query",
+                "description": "The transaction"
+              }
+            ]
+          },
+          "docs": "IMPORTANT: use only for testing and development. In production, use\nBroadcastTxSync or BroadcastTxAsync. You can subscribe for the transaction\nresult using JSONRPC via a websocket. See\nhttps://docs.tendermint.com/v0.34/app-dev/subscribing-to-events-via-websocket.html\n\nCONTRACT: only returns error if mempool.CheckTx() errs or if we timeout\nwaiting for tx to commit.\n\nIf CheckTx or DeliverTx fail, no error will be returned, but the returned result\nwill contain a non-OK ABCI code.\n\nPlease refer to\nh"
+        },
+        {
+          "info": {
+            "name": "Checks the transaction without executing it.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/check_tx",
+            "params": [
+              {
+                "name": "tx",
+                "value": "",
+                "type": "query",
+                "description": "The transaction"
+              }
+            ]
+          },
+          "docs": "The transaction won't be added to the mempool.\n\nPlease refer to\nhttps://docs.tendermint.com/v0.34/tendermint-core/using-tendermint.html#formatting\nfor formatting/encoding rules.\n\nUpon success, the `Cache-Control` header will be set with the default\nmaximum age.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

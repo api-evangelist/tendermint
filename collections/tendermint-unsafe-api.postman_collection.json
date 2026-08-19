@@ -1,0 +1,346 @@
+{
+  "item": [
+    {
+      "id": "44618ba1-71ec-4874-85e8-596fff5cfb76",
+      "name": "Unsafe",
+      "description": {
+        "content": "Unsafe APIs",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4b210e97-189e-48d6-a605-c8f525026ff4",
+          "name": "Dial Seeds (Unsafe)",
+          "request": {
+            "name": "Dial Seeds (Unsafe)",
+            "description": {
+              "content": "Dial a peer, this route in under unsafe, and has to manually enabled to use\n\n  **Example:** curl 'localhost:26657/dial_seeds?seeds=\\[\"f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656\",\"0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656\"\\]'\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "dial_seeds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "peers",
+                  "value": "<string>",
+                  "description": "list of seed nodes to dial"
+                },
+                {
+                  "disabled": false,
+                  "key": "peers",
+                  "value": "<string>",
+                  "description": "list of seed nodes to dial"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "217f34ee-4c6d-4eb4-abf8-787041800924",
+              "name": "Dialing seeds in progress. See /net_info for details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dial_seeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "peers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "peers",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Log\": \"Dialing seeds in progress. See /net_info for details\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bb3ebb6-751c-4ecc-aa49-845ef4a86b54",
+              "name": "empty error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dial_seeds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "peers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "peers",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e2fcbfd-9ea4-4a12-a539-d715f57ea3cc",
+          "name": "Add Peers/Persistent Peers (unsafe)",
+          "request": {
+            "name": "Add Peers/Persistent Peers (unsafe)",
+            "description": {
+              "content": "Set a persistent peer, this route in under unsafe, and has to manually enabled to use.\n\n**Example:** curl 'localhost:26657/dial_peers?peers=\\[\"f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656\",\"0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656\"\\]&persistent=false'\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "dial_peers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "persistent",
+                  "value": "<boolean>",
+                  "description": "Have the peers you are dialing be persistent"
+                },
+                {
+                  "disabled": false,
+                  "key": "unconditional",
+                  "value": "<boolean>",
+                  "description": "Have the peers you are dialing be unconditional"
+                },
+                {
+                  "disabled": false,
+                  "key": "private",
+                  "value": "<boolean>",
+                  "description": "Have the peers you are dialing be private"
+                },
+                {
+                  "disabled": false,
+                  "key": "peers",
+                  "value": "<string>",
+                  "description": "array of peers to dial"
+                },
+                {
+                  "disabled": false,
+                  "key": "peers",
+                  "value": "<string>",
+                  "description": "array of peers to dial"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "97f82e90-35e5-4a7a-a7b7-e1ab9fe54c2d",
+              "name": "Dialing seeds in progress. See /net_info for details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dial_peers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "persistent",
+                      "value": "true"
+                    },
+                    {
+                      "key": "unconditional",
+                      "value": "true"
+                    },
+                    {
+                      "key": "private",
+                      "value": "true"
+                    },
+                    {
+                      "key": "peers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "peers",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Log\": \"Dialing seeds in progress. See /net_info for details\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a39b9098-91e4-4373-b874-53b1ac3c5b72",
+              "name": "empty error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dial_peers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "persistent",
+                      "value": "true"
+                    },
+                    {
+                      "key": "unconditional",
+                      "value": "true"
+                    },
+                    {
+                      "key": "private",
+                      "value": "true"
+                    },
+                    {
+                      "key": "peers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "peers",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rpc.cosmos.network",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "207a7ca6-9b78-4004-84be-d597c3d2c458",
+    "name": "Tendermint RPC ABCI Unsafe API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Tendermint supports the following RPC protocols:\n\n* URI over HTTP\n* JSONRPC over HTTP\n* JSONRPC over websockets\n\n## Configuration\n\nRPC can be configured by tuning parameters under `[rpc]` table in the\n`$TMHOME/config/config.toml` file or by using the `--rpc.X` command-line\nflags.\n\nDefault rpc listen address is `tcp://0.0.0.0:26657`.\nTo set another address, set the `laddr` config parameter to desired value.\nCORS (Cross-Origin Resource Sharing) can be enabled by setting\n`cors_allowed_origins`, `cors_allowed_methods`, `cors_allowed_headers`\nconfig parameters.\n\n## Arguments\n\nArguments which expect strings or byte arrays may be passed as quoted\nstrings, like `\"abc\"` or as `0x`-prefixed strings, like `0x616263`.\n\n## URI/HTTP\n\nA REST like interface.\n\n    curl localhost:26657/block?height=5\n\n## JSONRPC/HTTP\n\nJSONRPC requests can be POST'd to the root RPC endpoint via HTTP.\n\n    curl --header \"Content-Type: application/json\" --request POST --data '{\"method\": \"block\", \"params\": [\"5\"], \"id\": 1}' localhost:26657\n\n## JSONRPC/websockets\n\nJSONRPC requests can be also made via websocket.\nThe websocket endpoint is at `/websocket`, e.g. `localhost:26657/websocket`.\nAsynchronous RPC functions like event `subscribe` and `unsubscribe` are\nonly available via websockets.\n\nExample using https://github.com/hashrocket/ws:\n\n    ws ws://localhost:26657/websocket\n    > { \"jsonrpc\": \"2.0\", \"method\": \"subscribe\", \"params\": [\"tm.event='NewBlock'\"], \"id\": 1 }\n\n\nContact Support:\n Name: Tendermint RPC",
+      "type": "text/plain"
+    }
+  }
+}

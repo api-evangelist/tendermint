@@ -1,0 +1,520 @@
+{
+  "item": [
+    {
+      "id": "ad1cad3b-0a40-4fa3-8e59-d8306d420827",
+      "name": "Tx",
+      "description": {
+        "content": "Transactions broadcast APIs",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "427e9925-3722-4801-829c-8009ed403804",
+          "name": "Returns with the response from CheckTx. Does not wait for DeliverTx result.",
+          "request": {
+            "name": "Returns with the response from CheckTx. Does not wait for DeliverTx result.",
+            "description": {
+              "content": "If you want to be sure that the transaction is included in a block, you can\nsubscribe for the result using JSONRPC via a websocket. See\nhttps://docs.tendermint.com/v0.34/app-dev/subscribing-to-events-via-websocket.html\nIf you haven't received anything after a couple of blocks, resend it. If the\nsame happens again, send it to some other node. A few reasons why it could\nhappen:\n\n1. malicious node can drop or pretend it had committed your tx\n2. malicious proposer (not necessary the one you're communicating with) can\ndrop transactions, which might become valid in the future\n(https://github.com/tendermint/tendermint/issues/3322)\n\n\nPlease refer to\nhttps://docs.tendermint.com/v0.34/tendermint-core/using-tendermint.html#formatting\nfor formatting/encoding rules.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "broadcast_tx_sync"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tx",
+                  "value": "<string>",
+                  "description": "(Required) The transaction"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e26ec2a7-ad56-4560-aedf-b221e646e4db",
+              "name": "Empty",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "broadcast_tx_sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tx",
+                      "value": "456"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 0,\n  \"result\": {\n    \"code\": \"0\",\n    \"data\": \"\",\n    \"log\": \"\",\n    \"hash\": \"0D33F2F03A5234F38706E43004489E061AC40A2E\",\n    \"codespace\": \"ibc\"\n  },\n  \"error\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b82f27e-df33-4867-a501-c64a16b173b8",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "broadcast_tx_sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tx",
+                      "value": "456"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4029c700-baa2-465a-9515-f7cbf133888c",
+          "name": "Returns right away, with no response. Does not wait for CheckTx nor DeliverTx results.",
+          "request": {
+            "name": "Returns right away, with no response. Does not wait for CheckTx nor DeliverTx results.",
+            "description": {
+              "content": "If you want to be sure that the transaction is included in a block, you can\nsubscribe for the result using JSONRPC via a websocket. See\nhttps://docs.tendermint.com/v0.34/app-dev/subscribing-to-events-via-websocket.html\nIf you haven't received anything after a couple of blocks, resend it. If the\nsame happens again, send it to some other node. A few reasons why it could\nhappen:\n\n1. malicious node can drop or pretend it had committed your tx\n2. malicious proposer (not necessary the one you're communicating with) can\ndrop transactions, which might become valid in the future\n(https://github.com/tendermint/tendermint/issues/3322)\n3. node can be offline\n\nPlease refer to\nhttps://docs.tendermint.com/v0.34/tendermint-core/using-tendermint.html#formatting\nfor formatting/encoding rules.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "broadcast_tx_async"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tx",
+                  "value": "<string>",
+                  "description": "(Required) The transaction"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2ef8e62e-08c1-4921-8c51-b5bb813e79c6",
+              "name": "empty answer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "broadcast_tx_async"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tx",
+                      "value": "123"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 0,\n  \"result\": {\n    \"code\": \"0\",\n    \"data\": \"\",\n    \"log\": \"\",\n    \"hash\": \"0D33F2F03A5234F38706E43004489E061AC40A2E\",\n    \"codespace\": \"ibc\"\n  },\n  \"error\": \"\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67a51b88-16d6-4544-aa65-a42bec505bfb",
+              "name": "empty error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "broadcast_tx_async"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tx",
+                      "value": "123"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7855a0ab-3c38-4a79-a1e7-9cb077cd91e6",
+          "name": "Returns with the responses from CheckTx and DeliverTx.",
+          "request": {
+            "name": "Returns with the responses from CheckTx and DeliverTx.",
+            "description": {
+              "content": "IMPORTANT: use only for testing and development. In production, use\nBroadcastTxSync or BroadcastTxAsync. You can subscribe for the transaction\nresult using JSONRPC via a websocket. See\nhttps://docs.tendermint.com/v0.34/app-dev/subscribing-to-events-via-websocket.html\n\nCONTRACT: only returns error if mempool.CheckTx() errs or if we timeout\nwaiting for tx to commit.\n\nIf CheckTx or DeliverTx fail, no error will be returned, but the returned result\nwill contain a non-OK ABCI code.\n\nPlease refer to\nhttps://docs.tendermint.com/v0.34/tendermint-core/using-tendermint.html#formatting\nfor formatting/encoding rules.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "broadcast_tx_commit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tx",
+                  "value": "<string>",
+                  "description": "(Required) The transaction"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f56a7bf7-6459-4c71-947b-3864d7f3099a",
+              "name": "empty answer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "broadcast_tx_commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tx",
+                      "value": "785"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"\",\n  \"result\": {\n    \"height\": \"26682\",\n    \"hash\": \"75CA0F856A4DA078FC4911580360E70CEFB2EBEE\",\n    \"deliver_tx\": {\n      \"log\": \"\",\n      \"data\": \"\",\n      \"code\": \"0\"\n    },\n    \"check_tx\": {\n      \"log\": \"\",\n      \"data\": \"\",\n      \"code\": \"0\"\n    }\n  },\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b34fd78-42e4-4b0c-8f24-cdf492298b5e",
+              "name": "empty error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "broadcast_tx_commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tx",
+                      "value": "785"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f0b86bb-efbe-441d-ac6b-758599480fcf",
+          "name": "Checks the transaction without executing it.",
+          "request": {
+            "name": "Checks the transaction without executing it.",
+            "description": {
+              "content": "The transaction won't be added to the mempool.\n\nPlease refer to\nhttps://docs.tendermint.com/v0.34/tendermint-core/using-tendermint.html#formatting\nfor formatting/encoding rules.\n\nUpon success, the `Cache-Control` header will be set with the default\nmaximum age.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "check_tx"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tx",
+                  "value": "<string>",
+                  "description": "(Required) The transaction"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1c95fc3d-8dd4-4ecc-b658-fdbc944fe7c6",
+              "name": "ABCI application's CheckTx response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "check_tx"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tx",
+                      "value": "785"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"\",\n  \"result\": {\n    \"log\": \"\",\n    \"data\": \"\",\n    \"code\": \"0\",\n    \"info\": \"\",\n    \"gas_wanted\": \"1\",\n    \"gas_used\": \"0\",\n    \"events\": [\n      {\n        \"type\": \"app\",\n        \"attributes\": [\n          {\n            \"key\": \"YWN0aW9u\",\n            \"value\": \"c2VuZA==\",\n            \"index\": false\n          },\n          {\n            \"key\": \"YWN0aW9u\",\n            \"value\": \"c2VuZA==\",\n            \"index\": false\n          }\n        ]\n      },\n      {\n        \"type\": \"app\",\n        \"attributes\": [\n          {\n            \"key\": \"YWN0aW9u\",\n            \"value\": \"c2VuZA==\",\n            \"index\": false\n          },\n          {\n            \"key\": \"YWN0aW9u\",\n            \"value\": \"c2VuZA==\",\n            \"index\": false\n          }\n        ]\n      }\n    ],\n    \"codespace\": \"bank\"\n  },\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b975fec4-6f1f-447f-8cef-bceb76edf8fe",
+              "name": "empty error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "check_tx"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tx",
+                      "value": "785"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rpc.cosmos.network",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "46726e67-82b1-40e9-a34c-f74a578ff8db",
+    "name": "Tendermint RPC ABCI Tx API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Tendermint supports the following RPC protocols:\n\n* URI over HTTP\n* JSONRPC over HTTP\n* JSONRPC over websockets\n\n## Configuration\n\nRPC can be configured by tuning parameters under `[rpc]` table in the\n`$TMHOME/config/config.toml` file or by using the `--rpc.X` command-line\nflags.\n\nDefault rpc listen address is `tcp://0.0.0.0:26657`.\nTo set another address, set the `laddr` config parameter to desired value.\nCORS (Cross-Origin Resource Sharing) can be enabled by setting\n`cors_allowed_origins`, `cors_allowed_methods`, `cors_allowed_headers`\nconfig parameters.\n\n## Arguments\n\nArguments which expect strings or byte arrays may be passed as quoted\nstrings, like `\"abc\"` or as `0x`-prefixed strings, like `0x616263`.\n\n## URI/HTTP\n\nA REST like interface.\n\n    curl localhost:26657/block?height=5\n\n## JSONRPC/HTTP\n\nJSONRPC requests can be POST'd to the root RPC endpoint via HTTP.\n\n    curl --header \"Content-Type: application/json\" --request POST --data '{\"method\": \"block\", \"params\": [\"5\"], \"id\": 1}' localhost:26657\n\n## JSONRPC/websockets\n\nJSONRPC requests can be also made via websocket.\nThe websocket endpoint is at `/websocket`, e.g. `localhost:26657/websocket`.\nAsynchronous RPC functions like event `subscribe` and `unsubscribe` are\nonly available via websockets.\n\nExample using https://github.com/hashrocket/ws:\n\n    ws ws://localhost:26657/websocket\n    > { \"jsonrpc\": \"2.0\", \"method\": \"subscribe\", \"params\": [\"tm.event='NewBlock'\"], \"id\": 1 }\n\n\nContact Support:\n Name: Tendermint RPC",
+      "type": "text/plain"
+    }
+  }
+}

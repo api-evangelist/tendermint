@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tendermint RPC ABCI Websocket API",
+    "version": "v0.34"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Websocket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Subscribe for events via WebSocket.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/subscribe",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "query is a string, which has a form: \"condition AND condition ...\" (no OR at the\nmoment). condition has a form: \"key operation operand\". key is a string with\na restricted set of possible symbols ( \\t\\n\\r\\\\()\"'=>< are not allowed).\noperation can be \"=\", \"<\", \"<=\", \">\", \">=\", \"CONTAINS\". operand can be a\nstring (escaped with single quotes), number, date or time.\n"
+              }
+            ]
+          },
+          "docs": "To tell which events you want, you need to provide a query. query is a\nstring, which has a form: \"condition AND condition ...\" (no OR at the\nmoment). condition has a form: \"key operation operand\". key is a string with\na restricted set of possible symbols ( \\t\\n\\r\\\\()\"'=>< are not allowed).\noperation can be \"=\", \"<\", \"<=\", \">\", \">=\", \"CONTAINS\" AND \"EXISTS\". operand\ncan be a string (escaped with single quotes), number, date or time.\n\nExamples:\n      tm.event = 'NewBlock'               # new block"
+        },
+        {
+          "info": {
+            "name": "Unsubscribe from event on Websocket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/unsubscribe",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "query is a string, which has a form: \"condition AND condition ...\" (no OR at the\nmoment). condition has a form: \"key operation operand\". key is a string with\na restricted set of possible symbols ( \\t\\n\\r\\\\()\"'=>< are not allowed).\noperation can be \"=\", \"<\", \"<=\", \">\", \">=\", \"CONTAINS\". operand can be a\nstring (escaped with single quotes), number, date or time.\n"
+              }
+            ]
+          },
+          "docs": "```go\nclient := rpchttp.New(\"tcp:0.0.0.0:26657\", \"/websocket\")\nerr := client.Start()\nif err != nil {\n   handle error\n}\ndefer client.Stop()\nquery := \"tm.event = 'Tx' AND tx.height = 3\"\nerr = client.Unsubscribe(context.Background(), \"test-client\", query)\nif err != nil {\n   handle error\n}\n```\n"
+        },
+        {
+          "info": {
+            "name": "Unsubscribe from all events via WebSocket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/unsubscribe_all"
+          },
+          "docs": "Unsubscribe from all events via WebSocket\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

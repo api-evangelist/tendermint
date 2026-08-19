@@ -1,0 +1,381 @@
+{
+  "item": [
+    {
+      "id": "d136ecb3-1beb-45a6-a380-17aeb995b00f",
+      "name": "Websocket",
+      "description": {
+        "content": "Subscribe/unsubscribe are reserved for websocket events.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "652fb614-33ef-4cdf-b200-9bcf0fa9adc9",
+          "name": "Subscribe for events via WebSocket.",
+          "request": {
+            "name": "Subscribe for events via WebSocket.",
+            "description": {
+              "content": "To tell which events you want, you need to provide a query. query is a\nstring, which has a form: \"condition AND condition ...\" (no OR at the\nmoment). condition has a form: \"key operation operand\". key is a string with\na restricted set of possible symbols ( \\t\\n\\r\\\\()\"'=>< are not allowed).\noperation can be \"=\", \"<\", \"<=\", \">\", \">=\", \"CONTAINS\" AND \"EXISTS\". operand\ncan be a string (escaped with single quotes), number, date or time.\n\nExamples:\n      tm.event = 'NewBlock'               # new blocks\n      tm.event = 'CompleteProposal'       # node got a complete proposal\n      tm.event = 'Tx' AND tx.hash = 'XYZ' # single transaction\n      tm.event = 'Tx' AND tx.height = 5   # all txs of the fifth block\n      tx.height = 5                       # all txs of the fifth block\n\nTendermint provides a few predefined keys: tm.event, tx.hash and tx.height.\nNote for transactions, you can define additional keys by providing events with\nDeliverTx response.\n\nimport (\n    abci \"github.com/tendermint/tendermint/abci/types\"\n    \"github.com/tendermint/tendermint/libs/pubsub/query\"\n)\n\nabci.ResponseDeliverTx{\n  Events: []abci.Event{\n      {\n          Type: \"rewards.withdraw\",\n          Attributes: abci.EventAttribute{\n              {Key: []byte(\"address\"), Value: []byte(\"AddrA\"), Index: true},\n              {Key: []byte(\"source\"), Value: []byte(\"SrcX\"), Index: true},\n              {Key: []byte(\"amount\"), Value: []byte(\"...\"), Index: true},\n              {Key: []byte(\"balance\"), Value: []byte(\"...\"), Index: true},\n          },\n      },\n      {\n          Type: \"rewards.withdraw\",\n          Attributes: abci.EventAttribute{\n              {Key: []byte(\"address\"), Value: []byte(\"AddrB\"), Index: true},\n              {Key: []byte(\"source\"), Value: []byte(\"SrcY\"), Index: true},\n              {Key: []byte(\"amount\"), Value: []byte(\"...\"), Index: true},\n              {Key: []byte(\"balance\"), Value: []byte(\"...\"), Index: true},\n          },\n      },\n      {\n          Type: \"transfer\",\n          Attributes: abci.EventAttribute{\n              {Key: []byte(\"sender\"), Value: []byte(\"AddrC\"), Index: true},\n              {Key: []byte(\"recipient\"), Value: []byte(\"AddrD\"), Index: true},\n              {Key: []byte(\"amount\"), Value: []byte(\"...\"), Index: true},\n          },\n      },\n  },\n}\n\nAll events are indexed by a composite key of the form {eventType}.{evenAttrKey}.\nIn the above examples, the following keys would be indexed:\n   - rewards.withdraw.address\n   - rewards.withdraw.source\n   - rewards.withdraw.amount\n   - rewards.withdraw.balance\n   - transfer.sender\n   - transfer.recipient\n   - transfer.amount\n\nMultiple event types with duplicate keys are allowed and are meant to\ncategorize unique and distinct events. In the above example, all events\nindexed under the key `rewards.withdraw.address` will have the following\nvalues stored and queryable:\n\n   - AddrA\n   - AddrB\n\nTo create a query for txs where address AddrA withdrew rewards:\nquery.MustParse(\"tm.event = 'Tx' AND rewards.withdraw.address = 'AddrA'\")\n\nTo create a query for txs where address AddrA withdrew rewards from source Y:\nquery.MustParse(\"tm.event = 'Tx' AND rewards.withdraw.address = 'AddrA' AND rewards.withdraw.source = 'Y'\")\n\nTo create a query for txs where AddrA transferred funds:\nquery.MustParse(\"tm.event = 'Tx' AND transfer.sender = 'AddrA'\")\n\nThe following queries would return no results:\nquery.MustParse(\"tm.event = 'Tx' AND transfer.sender = 'AddrZ'\")\nquery.MustParse(\"tm.event = 'Tx' AND rewards.withdraw.address = 'AddrZ'\")\nquery.MustParse(\"tm.event = 'Tx' AND rewards.withdraw.source = 'W'\")\n\nSee list of all possible events here\nhttps://godoc.org/github.com/tendermint/tendermint/types#pkg-constants\n\nFor complete query syntax, check out\nhttps://godoc.org/github.com/tendermint/tendermint/libs/pubsub/query.\n\n```go\nimport rpchttp \"github.com/tendermint/rpc/client/http\"\nimport \"github.com/tendermint/tendermint/types\"\n\nclient := rpchttp.New(\"tcp:0.0.0.0:26657\", \"/websocket\")\nerr := client.Start()\nif err != nil {\n  handle error\n}\ndefer client.Stop()\nctx, cancel := context.WithTimeout(context.Background(), 1 * time.Second)\ndefer cancel()\nquery := \"tm.event = 'Tx' AND tx.height = 3\"\ntxs, err := client.Subscribe(ctx, \"test-client\", query)\nif err != nil {\n  handle error\n}\n\ngo func() {\n for e := range txs {\n   fmt.Println(\"got \", e.Data.(types.EventDataTx))\n   }\n}()\n```\n\nNOTE: if you're not reading events fast enough, Tendermint might\nterminate the subscription.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscribe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) query is a string, which has a form: \"condition AND condition ...\" (no OR at the\nmoment). condition has a form: \"key operation operand\". key is a string with\na restricted set of possible symbols ( \\t\\n\\r\\\\()\"'=>< are not allowed).\noperation can be \"=\", \"<\", \"<=\", \">\", \">=\", \"CONTAINS\". operand can be a\nstring (escaped with single quotes), number, date or time.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "00f8156f-8308-4f0f-a3ae-6c318cb46d00",
+              "name": "empty answer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscribe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "tm.event = 'Tx' AND tx.height = 5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"result\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1207f08f-d26d-4da9-ab08-162a307feb97",
+              "name": "empty error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscribe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "tm.event = 'Tx' AND tx.height = 5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77ebc931-65bd-4b71-bcda-618300d39569",
+          "name": "Unsubscribe from event on Websocket",
+          "request": {
+            "name": "Unsubscribe from event on Websocket",
+            "description": {
+              "content": "```go\nclient := rpchttp.New(\"tcp:0.0.0.0:26657\", \"/websocket\")\nerr := client.Start()\nif err != nil {\n   handle error\n}\ndefer client.Stop()\nquery := \"tm.event = 'Tx' AND tx.height = 3\"\nerr = client.Unsubscribe(context.Background(), \"test-client\", query)\nif err != nil {\n   handle error\n}\n```\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "unsubscribe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) query is a string, which has a form: \"condition AND condition ...\" (no OR at the\nmoment). condition has a form: \"key operation operand\". key is a string with\na restricted set of possible symbols ( \\t\\n\\r\\\\()\"'=>< are not allowed).\noperation can be \"=\", \"<\", \"<=\", \">\", \">=\", \"CONTAINS\". operand can be a\nstring (escaped with single quotes), number, date or time.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0768a944-6aab-43d5-ae8a-d7ebe8121e86",
+              "name": "Answer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "unsubscribe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "tm.event = 'Tx' AND tx.height = 5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"result\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ac74d08-7d62-43a9-b8a1-091354626e17",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "unsubscribe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "tm.event = 'Tx' AND tx.height = 5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b50d624-21a5-4896-9c9a-c343cff665fd",
+          "name": "Unsubscribe from all events via WebSocket",
+          "request": {
+            "name": "Unsubscribe from all events via WebSocket",
+            "description": {
+              "content": "Unsubscribe from all events via WebSocket\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "unsubscribe_all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1ddb7564-4a11-454c-9509-55fee31043c9",
+              "name": "empty answer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "unsubscribe_all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"result\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "131d1b6a-6fa5-40d9-9ba5-6eb1228c7eda",
+              "name": "empty error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "unsubscribe_all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rpc.cosmos.network",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a4f3223d-b3c3-40a0-97b3-f0bbdfa91abb",
+    "name": "Tendermint RPC ABCI Websocket API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Tendermint supports the following RPC protocols:\n\n* URI over HTTP\n* JSONRPC over HTTP\n* JSONRPC over websockets\n\n## Configuration\n\nRPC can be configured by tuning parameters under `[rpc]` table in the\n`$TMHOME/config/config.toml` file or by using the `--rpc.X` command-line\nflags.\n\nDefault rpc listen address is `tcp://0.0.0.0:26657`.\nTo set another address, set the `laddr` config parameter to desired value.\nCORS (Cross-Origin Resource Sharing) can be enabled by setting\n`cors_allowed_origins`, `cors_allowed_methods`, `cors_allowed_headers`\nconfig parameters.\n\n## Arguments\n\nArguments which expect strings or byte arrays may be passed as quoted\nstrings, like `\"abc\"` or as `0x`-prefixed strings, like `0x616263`.\n\n## URI/HTTP\n\nA REST like interface.\n\n    curl localhost:26657/block?height=5\n\n## JSONRPC/HTTP\n\nJSONRPC requests can be POST'd to the root RPC endpoint via HTTP.\n\n    curl --header \"Content-Type: application/json\" --request POST --data '{\"method\": \"block\", \"params\": [\"5\"], \"id\": 1}' localhost:26657\n\n## JSONRPC/websockets\n\nJSONRPC requests can be also made via websocket.\nThe websocket endpoint is at `/websocket`, e.g. `localhost:26657/websocket`.\nAsynchronous RPC functions like event `subscribe` and `unsubscribe` are\nonly available via websockets.\n\nExample using https://github.com/hashrocket/ws:\n\n    ws ws://localhost:26657/websocket\n    > { \"jsonrpc\": \"2.0\", \"method\": \"subscribe\", \"params\": [\"tm.event='NewBlock'\"], \"id\": 1 }\n\n\nContact Support:\n Name: Tendermint RPC",
+      "type": "text/plain"
+    }
+  }
+}

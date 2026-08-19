@@ -1,0 +1,301 @@
+{
+  "item": [
+    {
+      "id": "0d0766ed-a96a-4a0a-9eec-83fc299709ad",
+      "name": "ABCI",
+      "description": {
+        "content": "ABCI APIs",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aec89a32-3427-4f27-bb35-c7ff440c33b5",
+          "name": "Get info about the application.",
+          "request": {
+            "name": "Get info about the application.",
+            "description": {
+              "content": "Get info about the application.\n\nUpon success, the `Cache-Control` header will be set with the default\nmaximum age.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "abci_info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c728b36-f914-4571-83d9-9a5baeb6e71a",
+              "name": "Get some info about the application.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "abci_info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 0,\n  \"result\": {\n    \"response\": {\n      \"data\": \"{\\\"size\\\":0}\",\n      \"app_version\": \"1314126\",\n      \"version\": \"0.16.1\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "010cab89-d84d-4417-97c5-2ec26e04ce87",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "abci_info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2cfef558-3fd5-436f-9b60-59b9c5c81901",
+          "name": "Query the application for some information.",
+          "request": {
+            "name": "Query the application for some information.",
+            "description": {
+              "content": "Query the application for some information.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "abci_query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "path",
+                  "value": "<string>",
+                  "description": "(Required) Path to the data (\"/a/b/c\")"
+                },
+                {
+                  "disabled": false,
+                  "key": "data",
+                  "value": "<string>",
+                  "description": "(Required) Data"
+                },
+                {
+                  "disabled": false,
+                  "key": "height",
+                  "value": "0",
+                  "description": "Height (0 means latest)"
+                },
+                {
+                  "disabled": false,
+                  "key": "prove",
+                  "value": "false",
+                  "description": "Include proofs of the transactions inclusion in the block"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "76b03d88-efb0-4810-9826-7d4885287404",
+              "name": "Response of the submitted query",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "abci_query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "path",
+                      "value": "/a/b/c"
+                    },
+                    {
+                      "key": "data",
+                      "value": "IHAVENOIDEA"
+                    },
+                    {
+                      "key": "height",
+                      "value": "1"
+                    },
+                    {
+                      "key": "prove",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"\",\n  \"result\": {\n    \"response\": {\n      \"log\": \"exists\",\n      \"height\": \"0\",\n      \"proof\": \"010114FED0DAD959F36091AD761C922ABA3CBF1D8349990101020103011406AA2262E2F448242DF2C2607C3CDC705313EE3B0001149D16177BC71E445476174622EA559715C293740C\",\n      \"value\": \"61626364\",\n      \"key\": \"61626364\",\n      \"index\": \"-1\",\n      \"code\": \"0\"\n    }\n  },\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2783689b-9b42-4fa3-a2ae-6d3d5996adfc",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "abci_query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "path",
+                      "value": "/a/b/c"
+                    },
+                    {
+                      "key": "data",
+                      "value": "IHAVENOIDEA"
+                    },
+                    {
+                      "key": "height",
+                      "value": "1"
+                    },
+                    {
+                      "key": "prove",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 0,\n  \"jsonrpc\": \"2.0\",\n  \"error\": \"Description of failure\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://rpc.cosmos.network",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f4123c2e-7a93-40c4-bc3a-e23ebcef12f8",
+    "name": "Tendermint RPC ABCI API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Tendermint supports the following RPC protocols:\n\n* URI over HTTP\n* JSONRPC over HTTP\n* JSONRPC over websockets\n\n## Configuration\n\nRPC can be configured by tuning parameters under `[rpc]` table in the\n`$TMHOME/config/config.toml` file or by using the `--rpc.X` command-line\nflags.\n\nDefault rpc listen address is `tcp://0.0.0.0:26657`.\nTo set another address, set the `laddr` config parameter to desired value.\nCORS (Cross-Origin Resource Sharing) can be enabled by setting\n`cors_allowed_origins`, `cors_allowed_methods`, `cors_allowed_headers`\nconfig parameters.\n\n## Arguments\n\nArguments which expect strings or byte arrays may be passed as quoted\nstrings, like `\"abc\"` or as `0x`-prefixed strings, like `0x616263`.\n\n## URI/HTTP\n\nA REST like interface.\n\n    curl localhost:26657/block?height=5\n\n## JSONRPC/HTTP\n\nJSONRPC requests can be POST'd to the root RPC endpoint via HTTP.\n\n    curl --header \"Content-Type: application/json\" --request POST --data '{\"method\": \"block\", \"params\": [\"5\"], \"id\": 1}' localhost:26657\n\n## JSONRPC/websockets\n\nJSONRPC requests can be also made via websocket.\nThe websocket endpoint is at `/websocket`, e.g. `localhost:26657/websocket`.\nAsynchronous RPC functions like event `subscribe` and `unsubscribe` are\nonly available via websockets.\n\nExample using https://github.com/hashrocket/ws:\n\n    ws ws://localhost:26657/websocket\n    > { \"jsonrpc\": \"2.0\", \"method\": \"subscribe\", \"params\": [\"tm.event='NewBlock'\"], \"id\": 1 }\n\n\nContact Support:\n Name: Tendermint RPC",
+      "type": "text/plain"
+    }
+  }
+}

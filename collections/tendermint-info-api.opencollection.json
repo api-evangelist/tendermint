@@ -1,0 +1,389 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tendermint RPC ABCI Info API",
+    "version": "v0.34"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Info",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Node heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/health"
+          },
+          "docs": "Get node health. Returns empty result (200 OK) on success, no response - in case of an error.\n"
+        },
+        {
+          "info": {
+            "name": "Node Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/status"
+          },
+          "docs": "Get Tendermint status including node info, pubkey, latest block hash, app hash, block height and time.\n"
+        },
+        {
+          "info": {
+            "name": "Network informations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/net_info"
+          },
+          "docs": "Get network info.\n"
+        },
+        {
+          "info": {
+            "name": "Get block headers (max: 20) for minHeight <= height <= maxHeight.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/blockchain",
+            "params": [
+              {
+                "name": "minHeight",
+                "value": "",
+                "type": "query",
+                "description": "Minimum block height to return"
+              },
+              {
+                "name": "maxHeight",
+                "value": "",
+                "type": "query",
+                "description": "Maximum block height to return"
+              }
+            ]
+          },
+          "docs": "Get block headers for minHeight <= height <= maxHeight.\n\nAt most 20 items will be returned.\n\nUpon success, the `Cache-Control` header will be set with the default\nmaximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Get block at a specified height",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/block",
+            "params": [
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "height to return. If no height is provided, it will fetch the latest block."
+              }
+            ]
+          },
+          "docs": "Get Block.\n\nIf the `height` field is set to a non-default value, upon success, the\n`Cache-Control` header will be set with the default maximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Get block by hash",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/block_by_hash",
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "query",
+                "description": "block hash"
+              }
+            ]
+          },
+          "docs": "Get Block By Hash.\n\nUpon success, the `Cache-Control` header will be set with the default\nmaximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Get block results at a specified height",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/block_results",
+            "params": [
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "height to return. If no height is provided, it will fetch information regarding the latest block."
+              }
+            ]
+          },
+          "docs": "Get block_results. When the `discard_abci_responses` storage flag is\nenabled, this endpoint will return an error.\n\nIf the `height` field is set to a non-default value, upon success, the\n`Cache-Control` header will be set with the default maximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Get commit results at a specified height",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/commit",
+            "params": [
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "height to return. If no height is provided, it will fetch commit informations regarding the latest block."
+              }
+            ]
+          },
+          "docs": "Get Commit.\n\nIf the `height` field is set to a non-default value, upon success, the\n`Cache-Control` header will be set with the default maximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Get validator set at a specified height",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/validators",
+            "params": [
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "height to return. If no height is provided, it will fetch validator set which corresponds to the latest block."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of entries per page (max: 100)"
+              }
+            ]
+          },
+          "docs": "Get Validators. Validators are sorted by voting power.\n\nIf the `height` field is set to a non-default value, upon success, the\n`Cache-Control` header will be set with the default maximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Get Genesis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/genesis"
+          },
+          "docs": "Get genesis.\n\nUpon success, the `Cache-Control` header will be set with the default\nmaximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Get consensus state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/dump_consensus_state"
+          },
+          "docs": "Get consensus state.\n\nNot safe to call from inside the ABCI application during a block execution.\n"
+        },
+        {
+          "info": {
+            "name": "Get consensus state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/consensus_state"
+          },
+          "docs": "Get consensus state.\n\nNot safe to call from inside the ABCI application during a block execution.\n"
+        },
+        {
+          "info": {
+            "name": "Get consensus parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/consensus_params",
+            "params": [
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "height to return. If no height is provided, it will fetch commit informations regarding the latest block."
+              }
+            ]
+          },
+          "docs": "Get consensus parameters.\n\nIf the `height` field is set to a non-default value, upon success, the\n`Cache-Control` header will be set with the default maximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Get the list of unconfirmed transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/unconfirmed_txs",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of unconfirmed transactions to return (max 100)"
+              }
+            ]
+          },
+          "docs": "Get list of unconfirmed transactions\n"
+        },
+        {
+          "info": {
+            "name": "Get data about unconfirmed transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/num_unconfirmed_txs"
+          },
+          "docs": "Get data about unconfirmed transactions\n"
+        },
+        {
+          "info": {
+            "name": "Search for transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/tx_search",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query"
+              },
+              {
+                "name": "prove",
+                "value": "",
+                "type": "query",
+                "description": "Include proofs of the transactions inclusion in the block"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of entries per page (max: 100)"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order in which transactions are sorted (\"asc\" or \"desc\"), by height & index. If empty, default sorting will be still applied."
+              }
+            ]
+          },
+          "docs": "Search for transactions w/ their results.\n\nSee /subscribe for the query syntax.\n"
+        },
+        {
+          "info": {
+            "name": "Search for blocks by BeginBlock and EndBlock events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/block_search",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-based)"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of entries per page (max: 100)"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order in which blocks are sorted (\"asc\" or \"desc\"), by height. If empty, default sorting will be still applied."
+              }
+            ]
+          },
+          "docs": "Search for blocks by BeginBlock and EndBlock events.\n\nSee /subscribe for the query syntax.\n"
+        },
+        {
+          "info": {
+            "name": "Get transactions by hash",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/tx",
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "query",
+                "description": "hash of transaction to retrieve"
+              },
+              {
+                "name": "prove",
+                "value": "",
+                "type": "query",
+                "description": "Include proofs of the transaction's inclusion in the block"
+              }
+            ]
+          },
+          "docs": "Get a transaction\n\nUpon success, the `Cache-Control` header will be set with the default\nmaximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Broadcast evidence of the misbehavior.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/broadcast_evidence",
+            "params": [
+              {
+                "name": "evidence",
+                "value": "",
+                "type": "query",
+                "description": "JSON evidence"
+              }
+            ]
+          },
+          "docs": "Broadcast evidence of the misbehavior.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

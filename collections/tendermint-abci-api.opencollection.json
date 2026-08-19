@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tendermint RPC ABCI API",
+    "version": "v0.34"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ABCI",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get info about the application.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/abci_info"
+          },
+          "docs": "Get info about the application.\n\nUpon success, the `Cache-Control` header will be set with the default\nmaximum age.\n"
+        },
+        {
+          "info": {
+            "name": "Query the application for some information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/abci_query",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Path to the data (\"/a/b/c\")"
+              },
+              {
+                "name": "data",
+                "value": "",
+                "type": "query",
+                "description": "Data"
+              },
+              {
+                "name": "height",
+                "value": "",
+                "type": "query",
+                "description": "Height (0 means latest)"
+              },
+              {
+                "name": "prove",
+                "value": "",
+                "type": "query",
+                "description": "Include proofs of the transactions inclusion in the block"
+              }
+            ]
+          },
+          "docs": "Query the application for some information.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

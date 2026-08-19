@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tendermint RPC ABCI Unsafe API",
+    "version": "v0.34"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Unsafe",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dial Seeds (Unsafe)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/dial_seeds",
+            "params": [
+              {
+                "name": "peers",
+                "value": "",
+                "type": "query",
+                "description": "list of seed nodes to dial"
+              }
+            ]
+          },
+          "docs": "Dial a peer, this route in under unsafe, and has to manually enabled to use\n\n  **Example:** curl 'localhost:26657/dial_seeds?seeds=\\[\"f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656\",\"0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656\"\\]'\n"
+        },
+        {
+          "info": {
+            "name": "Add Peers/Persistent Peers (unsafe)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://rpc.cosmos.network/dial_peers",
+            "params": [
+              {
+                "name": "persistent",
+                "value": "",
+                "type": "query",
+                "description": "Have the peers you are dialing be persistent"
+              },
+              {
+                "name": "unconditional",
+                "value": "",
+                "type": "query",
+                "description": "Have the peers you are dialing be unconditional"
+              },
+              {
+                "name": "private",
+                "value": "",
+                "type": "query",
+                "description": "Have the peers you are dialing be private"
+              },
+              {
+                "name": "peers",
+                "value": "",
+                "type": "query",
+                "description": "array of peers to dial"
+              }
+            ]
+          },
+          "docs": "Set a persistent peer, this route in under unsafe, and has to manually enabled to use.\n\n**Example:** curl 'localhost:26657/dial_peers?peers=\\[\"f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656\",\"0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656\"\\]&persistent=false'\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
