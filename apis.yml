@@ -10,6 +10,17 @@ description: >-
   querying chain state, blocks, transactions and validators, and broadcasting
   transactions to a node. Tendermint Core has since been renamed to CometBFT,
   which is the actively maintained successor.
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: open
