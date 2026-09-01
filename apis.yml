@@ -105,7 +105,7 @@ apis:
   humanURL: https://docs.tendermint.com/master/rpc/
   baseURL: https://rpc.cosmos.network
   tags:
-  - Websocket
+  - WebSocket
   tags_raw:
   - Websocket
   properties:
