@@ -1,10 +1,27 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Tendermint RPC ABCI API
   contact:
     name: Tendermint RPC
     url: https://github.com/tendermint/tendermint/issues/new/choose
-  description: "Tendermint supports the following RPC protocols:\n\n* URI over HTTP\n* JSONRPC over HTTP\n* JSONRPC over websockets\n\n## Configuration\n\nRPC can be configured by tuning parameters under `[rpc]` table in the\n`$TMHOME/config/config.toml` file or by using the `--rpc.X` command-line\nflags.\n\nDefault rpc listen address is `tcp://0.0.0.0:26657`.\nTo set another address, set the `laddr` config parameter to desired value.\nCORS (Cross-Origin Resource Sharing) can be enabled by setting\n`cors_allowed_origins`, `cors_allowed_methods`, `cors_allowed_headers`\nconfig parameters.\n\n## Arguments\n\nArguments which expect strings or byte arrays may be passed as quoted\nstrings, like `\"abc\"` or as `0x`-prefixed strings, like `0x616263`.\n\n## URI/HTTP\n\nA REST like interface.\n\n    curl localhost:26657/block?height=5\n\n## JSONRPC/HTTP\n\nJSONRPC requests can be POST'd to the root RPC endpoint via HTTP.\n\n    curl --header \"Content-Type: application/json\" --request POST --data '{\"method\": \"block\", \"params\": [\"5\"], \"id\": 1}' localhost:26657\n\n## JSONRPC/websockets\n\nJSONRPC requests can be also made via websocket.\nThe websocket endpoint is at `/websocket`, e.g. `localhost:26657/websocket`.\nAsynchronous RPC functions like event `subscribe` and `unsubscribe` are\nonly available via websockets.\n\nExample using https://github.com/hashrocket/ws:\n\n    ws ws://localhost:26657/websocket\n    > { \"jsonrpc\": \"2.0\", \"method\": \"subscribe\", \"params\": [\"tm.event='NewBlock'\"], \"id\": 1 }\n"
+  description: 'Tendermint supports the following RPC protocols:
+
+
+    * URI over HTTP
+
+    * JSONRPC over HTTP
+
+    * JSONRPC over websockets
+
+
+    ## Configuration
+
+
+    RPC can be configured by tuning parameters under `[rpc]` table in the
+
+    `$TMHOME/config/config.toml` file or by using the `--rpc.X` command-line
+
+    flags.'
   version: v0.34
   license:
     name: Apache 2.0
@@ -20,7 +37,7 @@ tags:
 paths:
   /abci_info:
     get:
-      summary: Get info about the application.
+      summary: Get info about the application
       operationId: abci_info
       tags:
       - ABCI
@@ -29,9 +46,7 @@ paths:
 
         Upon success, the `Cache-Control` header will be set with the default
 
-        maximum age.
-
-        '
+        maximum age.'
       responses:
         '200':
           description: Get some info about the application.
@@ -47,7 +62,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
   /abci_query:
     get:
-      summary: Query the application for some information.
+      summary: Query the application for some information
       operationId: abci_query
       parameters:
       - in: query
@@ -82,9 +97,7 @@ paths:
           default: false
       tags:
       - ABCI
-      description: 'Query the application for some information.
-
-        '
+      description: Query the application for some information.
       responses:
         '200':
           description: Response of the submitted query
@@ -100,6 +113,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    JSONRPC:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 0
+        jsonrpc:
+          type: string
+          example: '2.0'
     ABCIQueryResponse:
       type: object
       required:
@@ -154,15 +176,15 @@ components:
         jsonrpc:
           type: string
           example: '2.0'
-    JSONRPC:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 0
-        jsonrpc:
-          type: string
-          example: '2.0'
+    ErrorResponse:
+      description: Error Response
+      allOf:
+      - $ref: '#/components/schemas/JSONRPC'
+      - type: object
+        properties:
+          error:
+            type: string
+            example: Description of failure
     ABCIInfoResponse:
       type: object
       required:
@@ -196,12 +218,3 @@ components:
                   example: '1314126'
               type: object
           type: object
-    ErrorResponse:
-      description: Error Response
-      allOf:
-      - $ref: '#/components/schemas/JSONRPC'
-      - type: object
-        properties:
-          error:
-            type: string
-            example: Description of failure

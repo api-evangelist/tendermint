@@ -1,11 +1,7 @@
 {
   "provider": "tendermint",
   "sources": [
-    "tendermint-abci-api-openapi.yml",
-    "tendermint-info-api-openapi.yml",
-    "tendermint-tx-api-openapi.yml",
-    "tendermint-unsafe-api-openapi.yml",
-    "tendermint-websocket-api-openapi.yml"
+    "_original/tendermint-rpc-openapi-original.yml"
   ],
   "outputs": [
     "tendermint-abci-api-openapi.yml",
@@ -16,9 +12,19 @@
   ],
   "archived": [],
   "errors": [
-    "tendermint-info-api-openapi.yml: dangling $ref: #/components/schemas/BlockSearchResponse"
+    "tendermint-rpc-openapi-original.yml: dangling $ref: #/components/schemas/BlockSearchResponse"
   ],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "tendermint-rpc-openapi-original.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "tendermint-abci-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tendermint-info-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tendermint-tx-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tendermint-unsafe-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tendermint-websocket-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
