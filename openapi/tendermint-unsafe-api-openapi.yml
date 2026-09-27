@@ -121,12 +121,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    dialResp:
-      type: object
-      properties:
-        Log:
-          type: string
-          example: Dialing seeds in progress. See /net_info for details
     JSONRPC:
       type: object
       properties:
@@ -145,3 +139,9 @@ components:
           error:
             type: string
             example: Description of failure
+    dialResp:
+      type: object
+      properties:
+        Log:
+          type: string
+          example: Dialing seeds in progress. See /net_info for details

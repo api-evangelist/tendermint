@@ -122,6 +122,48 @@ components:
         jsonrpc:
           type: string
           example: '2.0'
+    ABCIInfoResponse:
+      type: object
+      required:
+      - jsonrpc
+      - id
+      properties:
+        jsonrpc:
+          type: string
+          example: '2.0'
+        id:
+          type: integer
+          example: 0
+        result:
+          required:
+          - response
+          properties:
+            response:
+              required:
+              - data
+              - app_version
+              - version
+              properties:
+                data:
+                  type: string
+                  example: '{"size":0}'
+                version:
+                  type: string
+                  example: 0.16.1
+                app_version:
+                  type: string
+                  example: '1314126'
+              type: object
+          type: object
+    ErrorResponse:
+      description: Error Response
+      allOf:
+      - $ref: '#/components/schemas/JSONRPC'
+      - type: object
+        properties:
+          error:
+            type: string
+            example: Description of failure
     ABCIQueryResponse:
       type: object
       required:
@@ -176,45 +218,3 @@ components:
         jsonrpc:
           type: string
           example: '2.0'
-    ErrorResponse:
-      description: Error Response
-      allOf:
-      - $ref: '#/components/schemas/JSONRPC'
-      - type: object
-        properties:
-          error:
-            type: string
-            example: Description of failure
-    ABCIInfoResponse:
-      type: object
-      required:
-      - jsonrpc
-      - id
-      properties:
-        jsonrpc:
-          type: string
-          example: '2.0'
-        id:
-          type: integer
-          example: 0
-        result:
-          required:
-          - response
-          properties:
-            response:
-              required:
-              - data
-              - app_version
-              - version
-              properties:
-                data:
-                  type: string
-                  example: '{"size":0}'
-                version:
-                  type: string
-                  example: 0.16.1
-                app_version:
-                  type: string
-                  example: '1314126'
-              type: object
-          type: object
