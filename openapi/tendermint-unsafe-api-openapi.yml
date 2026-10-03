@@ -121,15 +121,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    JSONRPC:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 0
-        jsonrpc:
-          type: string
-          example: '2.0'
     ErrorResponse:
       description: Error Response
       allOf:
@@ -145,3 +136,12 @@ components:
         Log:
           type: string
           example: Dialing seeds in progress. See /net_info for details
+    JSONRPC:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 0
+        jsonrpc:
+          type: string
+          example: '2.0'

@@ -113,48 +113,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    JSONRPC:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 0
-        jsonrpc:
-          type: string
-          example: '2.0'
-    ABCIInfoResponse:
-      type: object
-      required:
-      - jsonrpc
-      - id
-      properties:
-        jsonrpc:
-          type: string
-          example: '2.0'
-        id:
-          type: integer
-          example: 0
-        result:
-          required:
-          - response
-          properties:
-            response:
-              required:
-              - data
-              - app_version
-              - version
-              properties:
-                data:
-                  type: string
-                  example: '{"size":0}'
-                version:
-                  type: string
-                  example: 0.16.1
-                app_version:
-                  type: string
-                  example: '1314126'
-              type: object
-          type: object
     ErrorResponse:
       description: Error Response
       allOf:
@@ -212,6 +170,48 @@ components:
                   example: '0'
               type: object
           type: object
+        id:
+          type: integer
+          example: 0
+        jsonrpc:
+          type: string
+          example: '2.0'
+    ABCIInfoResponse:
+      type: object
+      required:
+      - jsonrpc
+      - id
+      properties:
+        jsonrpc:
+          type: string
+          example: '2.0'
+        id:
+          type: integer
+          example: 0
+        result:
+          required:
+          - response
+          properties:
+            response:
+              required:
+              - data
+              - app_version
+              - version
+              properties:
+                data:
+                  type: string
+                  example: '{"size":0}'
+                version:
+                  type: string
+                  example: 0.16.1
+                app_version:
+                  type: string
+                  example: '1314126'
+              type: object
+          type: object
+    JSONRPC:
+      type: object
+      properties:
         id:
           type: integer
           example: 0
