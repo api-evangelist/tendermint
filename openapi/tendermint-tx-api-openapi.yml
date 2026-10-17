@@ -238,83 +238,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CheckTxResponse:
-      type: object
-      required:
-      - error
-      - result
-      - id
-      - jsonrpc
-      properties:
-        error:
-          type: string
-          example: ''
-        result:
-          required:
-          - log
-          - data
-          - code
-          properties:
-            code:
-              type: string
-              example: '0'
-            data:
-              type: string
-              example: ''
-            log:
-              type: string
-              example: ''
-            info:
-              type: string
-              example: ''
-            gas_wanted:
-              type: string
-              example: '1'
-            gas_used:
-              type: string
-              example: '0'
-            events:
-              type:
-              - array
-              - 'null'
-              items:
-                type: object
-                properties:
-                  type:
-                    type: string
-                    example: app
-                  attributes:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Event'
-            codespace:
-              type: string
-              example: bank
-          type: object
-        id:
-          type: integer
-          example: 0
-        jsonrpc:
-          type: string
-          example: '2.0'
-    ErrorResponse:
-      description: Error Response
-      allOf:
-      - $ref: '#/components/schemas/JSONRPC'
-      - type: object
-        properties:
-          error:
-            type: string
-            example: Description of failure
-    JSONRPC:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 0
-        jsonrpc:
-          type: string
-          example: '2.0'
     BroadcastTxCommitResponse:
       type: object
       required:
@@ -430,3 +353,80 @@ components:
         index:
           type: boolean
           example: false
+    CheckTxResponse:
+      type: object
+      required:
+      - error
+      - result
+      - id
+      - jsonrpc
+      properties:
+        error:
+          type: string
+          example: ''
+        result:
+          required:
+          - log
+          - data
+          - code
+          properties:
+            code:
+              type: string
+              example: '0'
+            data:
+              type: string
+              example: ''
+            log:
+              type: string
+              example: ''
+            info:
+              type: string
+              example: ''
+            gas_wanted:
+              type: string
+              example: '1'
+            gas_used:
+              type: string
+              example: '0'
+            events:
+              type:
+              - array
+              - 'null'
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: app
+                  attributes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Event'
+            codespace:
+              type: string
+              example: bank
+          type: object
+        id:
+          type: integer
+          example: 0
+        jsonrpc:
+          type: string
+          example: '2.0'
+    ErrorResponse:
+      description: Error Response
+      allOf:
+      - $ref: '#/components/schemas/JSONRPC'
+      - type: object
+        properties:
+          error:
+            type: string
+            example: Description of failure
+    JSONRPC:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 0
+        jsonrpc:
+          type: string
+          example: '2.0'
