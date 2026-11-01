@@ -64,6 +64,124 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Tendermint is a company surfaced as a portfolio company of polychain and added to the API Evangelist network as a stub for enrichment. Sector: infrastructure. This profile is a lead awaiting the enrichment pipeline.
+Tendermint is a core contributor to the Cosmos Network and the original developer of Tendermint Core, a best-in-class Byzantine Fault Tolerant (BFT) consensus engine for state-machine replication, alongside the Cosmos SDK blockchain application framework and the IBC inter-blockchain communication protocol. Its primary developer-facing API is the Tendermint RPC — a JSONRPC 2.0 interface (also exposed as a REST-URI form and over websockets) for querying chain state, blocks, transactions and validators, and broadcasting transactions to a node. Tendermint Core has since been renamed to CometBFT, which is the actively maintained successor.
 
-Backed by: polychain — https://tendermint.com
+**Areas:** Company · Infrastructure · Blockchain · Consensus · Cosmos · Web3 · JSON-RPC · Node
+
+## Tendermint on APIs.io
+
+Everything profiled for Tendermint is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/tendermint/](https://apis.io/providers/tendermint/)** — or go straight to one of the APIs or properties below.
+
+### APIs (5)
+
+- [Tendermint ABCI API](https://apis.io/apis/tendermint/tendermint-abci-api/) — ABCI APIs
+- [Tendermint Info API](https://apis.io/apis/tendermint/tendermint-info-api/) — Informations about the node APIs
+- [Tendermint Tx API](https://apis.io/apis/tendermint/tendermint-tx-api/) — Transactions broadcast APIs
+- [Tendermint Unsafe API](https://apis.io/apis/tendermint/tendermint-unsafe-api/) — Unsafe APIs
+- [Tendermint Websocket API](https://apis.io/apis/tendermint/tendermint-websocket-api/) — Subscribe/unsubscribe are reserved for websocket events.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Tendermint Events Webhooks](https://apis.io/asyncapis/tendermint/tendermint-events-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [tendermint-rpc](https://apis.io/servers/tendermint/tendermint-rpc/)
+
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [Tendermint RPC ABCI API](https://apis.io/collections/tendermint/open-tendermint-abci-api/)
+- [Tendermint RPC ABCI Info API](https://apis.io/collections/tendermint/open-tendermint-info-api/)
+- [Tendermint RPC ABCI Tx API](https://apis.io/collections/tendermint/open-tendermint-tx-api/)
+- [Tendermint RPC ABCI Unsafe API](https://apis.io/collections/tendermint/open-tendermint-unsafe-api/)
+- [Tendermint RPC ABCI Websocket API](https://apis.io/collections/tendermint/open-tendermint-websocket-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Tendermint Rpc Overlay](https://apis.io/overlays/tendermint/tendermint-rpc-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Tendermint Authentication](https://apis.io/security/tendermint/tendermint-authentication/)
+- [Tendermint Domain Security](https://apis.io/security/tendermint/tendermint-domain-security/)
+- [Tendermint Vulnerability Disclosure](https://apis.io/security/tendermint/tendermint-vulnerability-disclosure/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://tendermint.com)
+- [Documentation](https://docs.tendermint.com/)
+- [Getting started](https://docs.tendermint.com/master/introduction/quick-start.html)
+- [API reference](https://docs.tendermint.com/master/rpc/)
+- [Support](https://forum.cosmos.network/c/tendermint)
+- [Blog](https://medium.com/tendermint)
+- [Security](https://github.com/tendermint/tendermint/blob/main/SECURITY.md)
+- [GitHub](https://github.com/tendermint)
+
+## API Evangelist rating
+
+**Kin Score 38.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 49.2 |
+| Contract governance | 4.5 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 58.9 |
+| Access clarity | 0.0 |
+
+**Agent readiness 29.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/tendermint/](https://apis.io/providers/tendermint/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Tendermint: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/tendermint/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
